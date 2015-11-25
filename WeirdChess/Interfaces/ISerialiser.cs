@@ -6,7 +6,7 @@ namespace WeirdChess.Interfaces
     /// </summary>
     /// <typeparam name="T">Specifies the argument type of the object to be serialised.
     /// Can only be an object, which implements ISavable</typeparam>
-    public interface ISerializer<in T> where T : ISavable
+    public interface ISerialiser<in T> where T : ISavable
     {
         /// <summary>
         /// The target file path specified within the object constructor.

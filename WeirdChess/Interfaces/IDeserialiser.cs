@@ -6,7 +6,7 @@ namespace WeirdChess.Interfaces
     /// </summary>
     /// <typeparam name="T">Specifies the return type of the Deserialise method. 
     /// Can only be an object, which implments ISavable</typeparam>
-    public interface IDeserializer<out T> where T : ISavable
+    public interface IDeserialiser<out T> where T : ISavable
     {
         /// <summary>
         /// The target file path specified within the object constructor.

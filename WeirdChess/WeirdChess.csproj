@@ -42,11 +42,14 @@
     <Compile Include="Enums\MusicOptions.cs" />
     <Compile Include="Enums\SoundOptions.cs" />
     <Compile Include="GameMain.cs" />
-    <Compile Include="Interfaces\IDeserializer.cs" />
+    <Compile Include="Interfaces\IDeserialiser.cs" />
     <Compile Include="Interfaces\ISavable.cs" />
-    <Compile Include="Interfaces\ISerializer.cs" />
+    <Compile Include="Interfaces\ISerialisationTool.cs" />
+    <Compile Include="Interfaces\ISerialisationToolFactory.cs" />
+    <Compile Include="Interfaces\ISerialiser.cs" />
     <Compile Include="Interfaces\ISetting.cs" />
     <Compile Include="Interfaces\ISettings.cs" />
+    <Compile Include="Interfaces\ISettingsController.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
   </ItemGroup>
   <ItemGroup>
