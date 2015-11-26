@@ -1,0 +1,374 @@
+<?xml version="1.0"?>
+<doc>
+    <assembly>
+        <name>WeirdChess</name>
+    </assembly>
+    <members>
+        <member name="T:WeirdChess.Core.GameEngine">
+            <summary>
+            This is the main type for your game.
+            </summary>
+        </member>
+        <member name="M:WeirdChess.Core.GameEngine.Initialize">
+            <summary>
+            Allows the game to perform any initialization it needs to before starting to run.
+            This is where it can query for any required services and load any non-graphic
+            related content.  Calling base.Initialize will enumerate through any components
+            and initialize them as well.
+            </summary>
+        </member>
+        <member name="M:WeirdChess.Core.GameEngine.LoadContent">
+            <summary>
+            LoadContent will be called once per game and is the place to load
+            all of your content.
+            </summary>
+        </member>
+        <member name="M:WeirdChess.Core.GameEngine.UnloadContent">
+            <summary>
+            UnloadContent will be called once per game and is the place to unload
+            game-specific content.
+            </summary>
+        </member>
+        <member name="M:WeirdChess.Core.GameEngine.Update(Microsoft.Xna.Framework.GameTime)">
+            <summary>
+            Allows the game to run logic such as updating the world,
+            checking for collisions, gathering input, and playing audio.
+            </summary>
+            <param name="gameTime">Provides a snapshot of timing values.</param>
+        </member>
+        <member name="M:WeirdChess.Core.GameEngine.Draw(Microsoft.Xna.Framework.GameTime)">
+            <summary>
+            This is called when the game should draw itself.
+            </summary>
+            <param name="gameTime">Provides a snapshot of timing values.</param>
+        </member>
+        <member name="T:WeirdChess.Enums.GameScreenType">
+            <summary>
+            Enumeration for the types of the different IGameScreen objects
+            </summary>
+        </member>
+        <member name="T:WeirdChess.Enums.MusicOptions">
+            <summary>
+            Enumeration for the Music Options
+            </summary>
+        </member>
+        <member name="T:WeirdChess.Enums.SettingType">
+            <summary>
+            Enumeration for the different types of settings
+            </summary>
+        </member>
+        <member name="T:WeirdChess.Enums.SoundOptions">
+            <summary>
+            Enumeration for the Sound Options
+            </summary>
+        </member>
+        <member name="T:WeirdChess.Exceptions.GameScreenTypeException">
+            <summary>
+            Exception class for GameScreenType enumeration.
+            </summary>
+        </member>
+        <member name="M:WeirdChess.Exceptions.GameScreenTypeException.#ctor(System.String,System.String)">
+            <summary>
+            Exception construtor. Takes two arguments, which are then passed to the base constructor.
+            </summary>
+            <param name="paramName">The param name</param>
+            <param name="message">The outer exception message</param>
+        </member>
+        <member name="T:WeirdChess.Exceptions.IteratorOutOfRangeException">
+            <summary>
+            Exception class for IITerator objects
+            </summary>
+        </member>
+        <member name="M:WeirdChess.Exceptions.IteratorOutOfRangeException.#ctor(System.String,System.String)">
+            <summary>
+            Exception construtor. Takes two arguments, which are then passed to the base constructor.
+            </summary>
+            <param name="paramName">The param name</param>
+            <param name="message">The outer exception message</param>
+        </member>
+        <member name="T:WeirdChess.GameMain">
+            <summary>
+            The main class.
+            </summary>
+        </member>
+        <member name="M:WeirdChess.GameMain.Main">
+            <summary>
+            The main entry point for the application.
+            </summary>
+        </member>
+        <member name="T:WeirdChess.Interfaces.IDeserialiser`1">
+            <summary>
+            Interface for Deserialiser objects
+            </summary>
+            <typeparam name="T">Specifies the return type of the Deserialise method. 
+            Can only be an object, which implments ISavable</typeparam>
+        </member>
+        <member name="M:WeirdChess.Interfaces.IDeserialiser`1.Deserialize(System.String)">
+            <summary>
+            When called, reads the file, 
+            specified by the FilePath property and returns the information from it, as a new ISavable object.
+            </summary>
+            <param name="filePath">The path to the target file</param>
+            <returns>A new ISavable object, containing the deserialised information.</returns>
+        </member>
+        <member name="T:WeirdChess.Interfaces.IGameScreen">
+            <summary>
+            Interface for GameScreen objects
+            </summary>
+        </member>
+        <member name="P:WeirdChess.Interfaces.IGameScreen.Type">
+            <summary>
+            The Type of the current GameScreen object.
+            </summary>
+        </member>
+        <member name="P:WeirdChess.Interfaces.IGameScreen.Displayed">
+            <summary>
+            Specifies if the current GameScreen object is on focus.
+            True if the current screen is on focus.
+            False if the curent screen is not on focus.
+            </summary>
+        </member>
+        <member name="T:WeirdChess.Interfaces.IIterable`1">
+            <summary>
+            Interface for iterable objects.
+            </summary>
+            <typeparam name="T">The type of objects that the iterator will iterate through</typeparam>
+        </member>
+        <member name="M:WeirdChess.Interfaces.IIterable`1.GetIterator">
+            <summary>
+            Method for retreiving an iterator of generic type T
+            </summary>
+            <returns>An iterator for navigating between objects of generic type T</returns>
+        </member>
+        <member name="T:WeirdChess.Interfaces.IIterator`1">
+            <summary>
+            Interface for Iterating through various collections.
+            </summary>
+        </member>
+        <member name="M:WeirdChess.Interfaces.IIterator`1.First">
+            <summary>
+            Sets the indexer to the first element of the collection.
+            This is the default position of the indexer.
+            </summary>
+        </member>
+        <member name="M:WeirdChess.Interfaces.IIterator`1.Next">
+            <summary>
+            Moves the indexer one position towards the Last element.
+            </summary>
+        </member>
+        <member name="M:WeirdChess.Interfaces.IIterator`1.Previous">
+            <summary>
+            Moves the indexer one position towards the First element.
+            </summary>
+        </member>
+        <member name="M:WeirdChess.Interfaces.IIterator`1.Last">
+            <summary>
+            Sets the indexer to the last element of the collection.
+            </summary>
+        </member>
+        <member name="M:WeirdChess.Interfaces.IIterator`1.Current">
+            <summary>
+            Returns the element that the indexer currently points to.
+            </summary>
+            <exception cref="T:WeirdChess.Exceptions.IteratorOutOfRangeException">Thrown when method is called and IsDone() returns TRUE</exception>
+            <returns></returns>
+        </member>
+        <member name="M:WeirdChess.Interfaces.IIterator`1.IsDone">
+            <summary>
+            Checks whether the curent indexer position is within the boundaries of the collection.
+            </summary>
+            <returns>
+            True if the current position is outside the collection boundaries.
+            False if the current position is inside the collection boundaries.
+            </returns>
+        </member>
+        <member name="T:WeirdChess.Interfaces.ISavable">
+            <summary>
+            Interface for objects, which can be read and saved to a file.
+            Contains methods for parsing objects to different types.
+            </summary>
+        </member>
+        <member name="M:WeirdChess.Interfaces.ISavable.IsSetting">
+            <summary>
+            Checks if the current object implements the ISettings interface.
+            </summary>
+            <returns>True if the object implements ISettings</returns>
+        </member>
+        <member name="M:WeirdChess.Interfaces.ISavable.AsSettings">
+            <summary>
+            Attempts to cast the current object to an ISettings object.
+            </summary>
+            <returns></returns>
+        </member>
+        <member name="T:WeirdChess.Interfaces.IScreenController">
+            <summary>
+            Interface for Screen Controller objects.
+            Provides methods for managing the IGameScreen collection.
+            Also provides an iterator for navigating between the different IGameScreen objects.
+            </summary>
+        </member>
+        <member name="M:WeirdChess.Interfaces.IScreenController.SetScreen(WeirdChess.Enums.GameScreenType,WeirdChess.Interfaces.IGameScreen)">
+            <summary>
+            Changes the value for the GameScreenType argument, to the IGameScreen argument.
+            </summary>
+            <exception cref="T:WeirdChess.Exceptions.GameScreenTypeException">Thrown if screenType value does not match the gameScreen.Type value</exception>
+            <param name="screenType">The screen type for the IGameScreen that's to be replaced.</param>
+            <param name="gameScreen">The new IGameScreen object</param>
+        </member>
+        <member name="M:WeirdChess.Interfaces.IScreenController.AddScreen(WeirdChess.Enums.GameScreenType,WeirdChess.Interfaces.IGameScreen)">
+            <summary>
+            Adds a new GameScreenType/IGameScreen pair to the IGameScreen collection.
+            </summary>
+            <exception cref="T:WeirdChess.Exceptions.GameScreenTypeException">Thrown if the a pair with the same GameScreenType already exists.</exception>
+            <param name="screenType">The GameScreenType value for the new pair.</param>
+            <param name="gameScreen">The IGameScreen object for the new pair.</param>
+        </member>
+        <member name="M:WeirdChess.Interfaces.IScreenController.DeleteScreen(WeirdChess.Enums.GameScreenType)">
+            <summary>
+            Deletes the GameScreenType/IGameScreen pair, described by the screenType argument.
+            </summary>
+            <param name="screenType">The GameScreenType for the GameScreenType/IGameScreen pair that will be deleted.</param>
+            <returns>Returns the IGameScreen object, from the deleted GameScreenType/IGameScreen pair.</returns>
+        </member>
+        <member name="M:WeirdChess.Interfaces.IScreenController.GetScreen(WeirdChess.Enums.GameScreenType)">
+            <summary>
+            Attempts to get the IGameScreen object, paired with the GameScreenType argument.
+            </summary>
+            <exception cref="T:WeirdChess.Exceptions.GameScreenTypeException">
+            Thrown if the method is called and Contains(screenType) returns FALSE.
+            </exception>
+            <param name="screenType">The GameScreenType of the IGameScreen that's to be retrieved.</param>
+            <returns>The IGameScreen object that's paired with the screenType argument.</returns>
+        </member>
+        <member name="M:WeirdChess.Interfaces.IScreenController.Contains(WeirdChess.Enums.GameScreenType)">
+            <summary>
+            Checks whether the IGameScreen collection contains a pair, with the provided GameScreenType.
+            </summary>
+            <param name="screenType">The GameScreenType for the GameScreenType/IGameScreen pair.</param>
+            <returns>
+            True if the pair is found.
+            False if the pair is not found. 
+            </returns>
+        </member>
+        <member name="T:WeirdChess.Interfaces.ISerialisationTool`1">
+            <summary>
+            Interface for Serialisation Tool objects. 
+            Contains a Serialise and Deserialise methods, created automatically upon initialisation.
+            </summary>
+            <typeparam name="T">An ISavable object, specifying the type of the ISerialiser and IDeserialiser objects</typeparam>
+        </member>
+        <member name="M:WeirdChess.Interfaces.ISerialisationTool`1.Serialise(`0)">
+            <summary>
+            Serialises the ISavable object from the argument into the file, specified in the FilePath property.
+            </summary>
+            <param name="savableObject">The ISavable object, containing the information that's to be serialised.</param>
+        </member>
+        <member name="M:WeirdChess.Interfaces.ISerialisationTool`1.Deserialise">
+            <summary>
+            Deserialises the information from the file, specified in the FilePath property, into an ISavable object.
+            </summary>
+            <returns>The deserialised information, as an ISavable object</returns>
+        </member>
+        <member name="P:WeirdChess.Interfaces.ISerialisationTool`1.FilePath">
+            <summary>
+            The target file path specified within the object constructor.
+            </summary>
+        </member>
+        <member name="T:WeirdChess.Interfaces.ISerialisationToolFactory`1">
+            <summary>
+            Interface for Factory objects, used for creating ISerialisationTool objects.
+            </summary>
+            <typeparam name="T">An ISavable object, specifying the type of objects that we want to serialise/deserialise</typeparam>
+        </member>
+        <member name="M:WeirdChess.Interfaces.ISerialisationToolFactory`1.CreateTool(System.String)">
+            <summary>
+            The factory method for creating ISerialisationTool objects.
+            </summary>
+            <param name="filePath">The path for the file that's to be used in the ISerialiser/IDeserialiser objects</param>
+            <returns>An ISerialisationTool object</returns>
+        </member>
+        <member name="T:WeirdChess.Interfaces.ISerialiser`1">
+            <summary>
+            Interface for Serialiser objects.
+            </summary>
+            <typeparam name="T">Specifies the argument type of the object to be serialised.
+            Can only be an object, which implements ISavable</typeparam>
+        </member>
+        <member name="M:WeirdChess.Interfaces.ISerialiser`1.Serialise(System.String,`0)">
+            <summary>
+            Writes the information from the T object to to the file specified by the FilePath property.
+            </summary>
+            <param name="filePath">The path to the target file.</param>
+            <param name="settings">An ISavable object which contains the information to be written to the file.</param>
+        </member>
+        <member name="T:WeirdChess.Interfaces.ISetting">
+            <summary>
+            An interface for Setting objects
+            </summary>
+        </member>
+        <member name="P:WeirdChess.Interfaces.ISetting.Type">
+            <summary>
+            The type of the setting object.
+            </summary>
+        </member>
+        <member name="P:WeirdChess.Interfaces.ISetting.Value">
+            <summary>
+            The value of the setting object.
+            </summary>
+        </member>
+        <member name="T:WeirdChess.Interfaces.ISettingFactory">
+            <summary>
+            Interface for Settings Factory objects
+            </summary>
+        </member>
+        <member name="M:WeirdChess.Interfaces.ISettingFactory.CreateSetting(WeirdChess.Enums.SettingType,System.Object)">
+            <summary>
+            Method for creating ISetting objects.
+            </summary>
+            <param name="settingType">The type of the new ISetting object.</param>
+            <param name="settingValue">The value of the new ISetting object.</param>
+            <returns>A new ISetting object, created with the method arguments.</returns>
+        </member>
+        <member name="T:WeirdChess.Interfaces.ISettings">
+            <summary>
+            An interface for ISettings objects. Implments ISavable.
+            </summary>
+        </member>
+        <member name="M:WeirdChess.Interfaces.ISettings.GetSetting(WeirdChess.Enums.SettingType)">
+            <summary>
+            Method for retreiving the specified ISetting object.
+            </summary>
+            <param name="settingType">The setting type which is to be returned</param>
+            <returns>An ISetting object, corresponding to the specified SettingType argument</returns>
+        </member>
+        <member name="M:WeirdChess.Interfaces.ISettings.SetSetting(WeirdChess.Enums.SettingType,System.Object)">
+            <summary>
+            Method for setting values on ISetting objects. 
+            </summary>
+            <param name="settingType">The setting type whose value will be changed</param>
+            <param name="value">The new value for the specified ISetting object</param>
+        </member>
+        <member name="T:WeirdChess.Interfaces.ISettingsController">
+            <summary>
+            Interface for Settings Controller objects
+            </summary>
+        </member>
+        <member name="M:WeirdChess.Interfaces.ISettingsController.SaveSettings">
+            <summary>
+            Saves the current ISettings object, using the ISerialisationTool object.
+            The save only occurs if the new settings are different than the old ones.
+            </summary>
+        </member>
+        <member name="P:WeirdChess.Interfaces.ISettingsController.Settings">
+            <summary>
+            Property containing the current settings, specified in the settings init file.
+            If the init file does not exist, it is created with the default values and the same are loaded in the ISettings object.
+            </summary>
+        </member>
+        <member name="T:WeirdChess.Utilities.Messages">
+            <summary>
+            Class containing constant messages
+            </summary>
+        </member>
+    </members>
+</doc>
