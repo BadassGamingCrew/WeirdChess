@@ -7,21 +7,13 @@ namespace WeirdChess.Interfaces
     public interface ISettingsController
     {
         /// <summary>
-        /// Property containing the ISerialisationTool object, used for getting and saving settings.
-        /// Specified in the object constructor.
-        /// </summary>
-        ISerialisationTool<ISavable> SerialisationTool { get; }
-        /// <summary>
-        /// Property containing the current settings.
-        /// The value is default(ISettings) by default.
-        /// When invoked, if the value is set, returns the current ISettings object.
-        /// If not set, a new ISettings object is created through 
-        /// the SerialisationTool, assigned to the property and returned as a result.
-        /// If the source of the ISavable object does not exist, a new one is created with the default settings.
+        /// Property containing the current settings, specified in the settings init file.
+        /// If the init file does not exist, it is created with the default values and the same are loaded in the ISettings object.
         /// </summary>
         ISettings Settings { get; }
         /// <summary>
-        /// Saves the current ISettings object, using the SerialisationTool.
+        /// Saves the current ISettings object, using the ISerialisationTool object.
+        /// The save only occurs if the new settings are different than the old ones.
         /// </summary>
         void SaveSettings();
     }

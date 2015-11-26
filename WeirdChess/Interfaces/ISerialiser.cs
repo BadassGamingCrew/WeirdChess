@@ -9,14 +9,10 @@ namespace WeirdChess.Interfaces
     public interface ISerialiser<in T> where T : ISavable
     {
         /// <summary>
-        /// The target file path specified within the object constructor.
-        /// The information from the T object will be written to it.
-        /// </summary>
-        string FilePath { get; }
-        /// <summary>
         /// Writes the information from the T object to to the file specified by the FilePath property.
         /// </summary>
+        /// <param name="filePath">The path to the target file.</param>
         /// <param name="settings">An ISavable object which contains the information to be written to the file.</param>
-        void Serialise(T settings);
+        void Serialise(string filePath, T settings);
     }
 }

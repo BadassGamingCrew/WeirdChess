@@ -3,18 +3,24 @@ namespace WeirdChess.Interfaces
 {
     /// <summary>
     /// Interface for Serialisation Tool objects. 
-    /// Contains a Serialiser and Deserialiser objects, created automatically upon initialisation.
+    /// Contains a Serialise and Deserialise methods, created automatically upon initialisation.
     /// </summary>
     /// <typeparam name="T">An ISavable object, specifying the type of the ISerialiser and IDeserialiser objects</typeparam>
     public interface ISerialisationTool<T> where T : ISavable
     {
         /// <summary>
-        /// Property containing an ISerialiser object of type T
+        /// The target file path specified within the object constructor.
         /// </summary>
-        ISerialiser<T> Serialiser { get; }
+        string FilePath { get; }
         /// <summary>
-        /// Property containing an IDeserialiser object of type T
+        /// Serialises the ISavable object from the argument into the file, specified in the FilePath property.
         /// </summary>
-        IDeserialiser<T> Deserialiser { get; } 
+        /// <param name="savableObject">The ISavable object, containing the information that's to be serialised.</param>
+        void Serialise(T savableObject);
+        /// <summary>
+        /// Deserialises the information from the file, specified in the FilePath property, into an ISavable object.
+        /// </summary>
+        /// <returns>The deserialised information, as an ISavable object</returns>
+        T Deserialise();
     }
 }

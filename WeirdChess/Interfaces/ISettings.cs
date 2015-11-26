@@ -8,26 +8,16 @@ namespace WeirdChess.Interfaces
     public interface ISettings : ISavable
     {
         /// <summary>
-        /// Contains the current screen resolution values as an int array.
-        /// Screen width is on index 0.
-        /// Screen height is on index 1.
+        /// Method for retreiving the specified ISetting object.
         /// </summary>
-        ISetting<int[]> ScreenResolution { get; }
+        /// <param name="settingType">The setting type which is to be returned</param>
+        /// <returns>An ISetting object, corresponding to the specified SettingType argument</returns>
+        ISetting GetSetting(SettingType settingType);
         /// <summary>
-        /// Property for the current music setting.
+        /// Method for setting values on ISetting objects. 
         /// </summary>
-        ISetting<MusicOptions> Music { get; }
-        /// <summary>
-        /// Property for the current Sound setting.
-        /// </summary>
-        ISetting<SoundOptions> Sound { get; }
-        /// <summary>
-        /// Property for the current Music Volume setting.
-        /// </summary>
-        ISetting<int> MusicVolume { get; }
-        /// <summary>
-        /// Property for the current Sound Volume setting.
-        /// </summary>
-        ISetting<int> SoundVolume { get; } 
+        /// <param name="settingType">The setting type whose value will be changed</param>
+        /// <param name="value">The new value for the specified ISetting object</param>
+        void SetSetting(SettingType settingType, object value);
     }
 }

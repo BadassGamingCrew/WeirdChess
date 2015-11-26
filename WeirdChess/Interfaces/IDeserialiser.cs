@@ -9,15 +9,11 @@ namespace WeirdChess.Interfaces
     public interface IDeserialiser<out T> where T : ISavable
     {
         /// <summary>
-        /// The target file path specified within the object constructor.
-        /// The target file will be read and the information from it - returned as a new ISavable object.
-        /// </summary>
-        string FilePath { get; }
-        /// <summary>
         /// When called, reads the file, 
         /// specified by the FilePath property and returns the information from it, as a new ISavable object.
         /// </summary>
+        /// <param name="filePath">The path to the target file</param>
         /// <returns>A new ISavable object, containing the deserialised information.</returns>
-        T Deserialize();
+        T Deserialize(string filePath);
     }
 }

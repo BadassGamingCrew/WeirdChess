@@ -40,6 +40,7 @@
   <ItemGroup>
     <Compile Include="Core\GameEngine.cs" />
     <Compile Include="Enums\MusicOptions.cs" />
+    <Compile Include="Enums\SettingType.cs" />
     <Compile Include="Enums\SoundOptions.cs" />
     <Compile Include="GameMain.cs" />
     <Compile Include="Interfaces\IDeserialiser.cs" />
@@ -48,6 +49,7 @@
     <Compile Include="Interfaces\ISerialisationToolFactory.cs" />
     <Compile Include="Interfaces\ISerialiser.cs" />
     <Compile Include="Interfaces\ISetting.cs" />
+    <Compile Include="Interfaces\ISettingFactory.cs" />
     <Compile Include="Interfaces\ISettings.cs" />
     <Compile Include="Interfaces\ISettingsController.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
@@ -68,6 +70,9 @@
   <ItemGroup>
     <Folder Include="Infrastructure\" />
     <Folder Include="Utilities\" />
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="ClassDiagram1.cd" />
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
   <Import Project="$(MSBuildExtensionsPath)\MonoGame\v3.0\MonoGame.Content.Builder.targets" />
