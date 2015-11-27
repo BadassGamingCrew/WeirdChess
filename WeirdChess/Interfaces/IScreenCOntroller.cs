@@ -28,6 +28,7 @@ namespace WeirdChess.Interfaces
         /// Deletes the GameScreenType/IGameScreen pair, described by the screenType argument.
         /// </summary>
         /// <param name="screenType">The GameScreenType for the GameScreenType/IGameScreen pair that will be deleted.</param>
+        /// <exception cref="GameScreenTypeException">Thrown if method is called and Contains(screenType) returns FALSE.</exception>
         /// <returns>Returns the IGameScreen object, from the deleted GameScreenType/IGameScreen pair.</returns>
         IGameScreen DeleteScreen(GameScreenType screenType);
         /// <summary>
