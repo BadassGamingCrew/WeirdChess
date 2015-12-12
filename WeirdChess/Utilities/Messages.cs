@@ -6,5 +6,6 @@ namespace WeirdChess.Utilities
     /// </summary>
     public static class Messages
     {
+        public const string DrawableObjectNotSet = "Drawable Object is not set for object {0}";
     }
 }
