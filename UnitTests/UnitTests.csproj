@@ -51,6 +51,7 @@
   </Choose>
   <ItemGroup>
     <Compile Include="IteratorTestCases\AbstractIteratorTestCase.cs" />
+    <Compile Include="IteratorTestCases\IteratorTestCase.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
   </ItemGroup>
   <ItemGroup>

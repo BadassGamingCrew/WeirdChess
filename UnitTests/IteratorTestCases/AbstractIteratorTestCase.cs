@@ -2,32 +2,1106 @@
 namespace UnitTests.IteratorTestCases
 {
     using System;
+    using System.Collections.Generic;
     using Microsoft.VisualStudio.TestTools.UnitTesting;
     using WeirdChess.Interfaces;
+    using WeirdChess.Exceptions;
 
     [TestClass]
     public abstract class AbstractIteratorTestCase
     {
-        private readonly string ValueA = "A";
-        private readonly string ValueB = "B";
-        private readonly string ValueC = "C";
-        private readonly string ValueD = "D";
-        private readonly int ValueOne = 1;
-        private readonly int ValueTwo = 2;
-        private readonly int ValueThree = 3;
-        private readonly int ValueFour = 4;
-        private string[] StringArray;
-        private int[] IntArray;
-        private IIterator<string> StringIterator;
-        private IIterator<int> IntIterator;
+        private readonly string valueA = "A";
+        private readonly string valueB = "B";
+        private readonly string valueC = "C";
+        private readonly string valueD = "D";
+        private readonly int valueOne = 1;
+        private readonly int valueTwo = 2;
+        private readonly int valueThree = 3;
+        private readonly int valueFour = 4;
+        private string[] stringArray;
+        private int[] intArray;
+        private List<string> stringList;
+        private List<int> intList; 
+        private IIterator<string> stringIterator;
+        private IIterator<int> intIterator;
 
         [ClassInitialize]
         public static void BaseInit(TestContext context)
         {
         }
 
-        public abstract IIterator<string> GetStringIterator();
-        public abstract IIterator<int> GetIntIterator();
+        [TestInitialize]
+        public void SetUp()
+        {
+            this.stringArray = new string[]
+            {
+                valueA, valueB, valueC, valueD
+            };
 
+            this.intArray = new int[]
+            {
+                valueOne, valueTwo, valueThree, valueFour
+            };
+
+            this.stringList = new List<string>();
+            this.stringList.AddRange(this.stringArray);
+
+            this.intList = new List<int>();
+            this.intList.AddRange(this.intArray);
+        }
+
+        [TestCleanup]
+        public void TearDown()
+        {
+            this.stringArray = null;
+            this.intArray = null;
+            this.stringList = null;
+            this.intList = null;
+        }
+
+        protected abstract IIterator<string> GetStringIterator(ICollection<string> stringCollection);
+        protected abstract IIterator<string> GetStringIterator(ICollection<string> stringCollection, int startIndex);
+        protected abstract IIterator<string> GetStringIterator(ICollection<string> stringCollection, int startIndex, int endIndex);
+        protected abstract IIterator<int> GetIntIterator(ICollection<int> intCollection);
+        protected abstract IIterator<int> GetIntIterator(ICollection<int> intCollection, int startIndex);
+        protected abstract IIterator<int> GetIntIterator(ICollection<int> intCollection, int startIndex, int endIndex);
+
+        [TestMethod]
+        [ExpectedException(typeof(IteratorOutOfRangeException))]
+        public void TestStringArrayIteratorThrowsExceptionWhenFirstOrLastIsNotCalled()
+        {
+            this.stringIterator = this.GetStringIterator(this.stringArray);
+
+            Assert.IsTrue(this.stringIterator.IsDone());
+            this.stringIterator.Current();
+        }
+
+        [TestMethod]
+        [ExpectedException(typeof(IteratorOutOfRangeException))]
+        public void TestIntArrayIteratorThrowsExceptionWhenFirstOrLastIsNotCalled()
+        {
+            this.intIterator = this.GetIntIterator(this.intArray);
+
+            Assert.IsTrue(this.intIterator.IsDone());
+            this.intIterator.Current();
+        }
+
+        [TestMethod]
+        [ExpectedException(typeof (IteratorOutOfRangeException))]
+        public void TestStringArrayIteratorWithStartIndexThrowsExceptionWhenFirstOrLastIsNotCalled()
+        {
+            this.stringIterator = this.GetStringIterator(this.stringArray, 1);
+
+            Assert.IsTrue(this.stringIterator.IsDone());
+            this.stringIterator.Current();
+        }
+
+        [TestMethod]
+        [ExpectedException(typeof(IteratorOutOfRangeException))]
+        public void TestIntArrayIteratorWithStartIndexThrowsExceptionWhenFirstOrLastIsNotCalled()
+        {
+            this.intIterator = this.GetIntIterator(this.intArray, 1);
+
+            Assert.IsTrue(this.intIterator.IsDone());
+            this.intIterator.Current();
+        }
+
+        [TestMethod]
+        [ExpectedException(typeof (IteratorOutOfRangeException))]
+        public void TestStringArrayIteratorWithStartAndEndIndexThrowsExceptionWhenFirstOrLastIsNotCalled()
+        {
+            this.stringIterator = this.GetStringIterator(this.stringArray, 1, 2);
+
+            Assert.IsTrue(this.stringIterator.IsDone());
+            this.stringIterator.Current();
+        }
+
+        [TestMethod]
+        [ExpectedException(typeof(IteratorOutOfRangeException))]
+        public void TestIntArrayIteratorWithStartAndEndIndexThrowsExceptionWhenFirstOrLastIsNotCalled()
+        {
+            this.intIterator = this.GetIntIterator(this.intArray, 1, 2);
+
+            Assert.IsTrue(this.intIterator.IsDone());
+            this.intIterator.Current();
+        }
+
+        [TestMethod]
+        [ExpectedException(typeof(IteratorOutOfRangeException))]
+        public void TestStringListIteratorThrowsExceptionWhenFirstOrLastIsNotCalled()
+        {
+            this.stringIterator = this.GetStringIterator(this.stringList);
+
+            Assert.IsTrue(this.stringIterator.IsDone());
+            this.stringIterator.Current();
+        }
+
+        [TestMethod]
+        [ExpectedException(typeof(IteratorOutOfRangeException))]
+        public void TestIntListIteratorThrowsExceptionWhenFirstOrLastIsNotCalled()
+        {
+            this.intIterator = this.GetIntIterator(this.intList);
+
+            Assert.IsTrue(this.intIterator.IsDone());
+            this.intIterator.Current();
+        }
+
+        [TestMethod]
+        [ExpectedException(typeof (IteratorOutOfRangeException))]
+        public void TestStringListIteratorWithStartIndexThrowsExceptionWhenFirstOrLastIsNotCalled()
+        {
+            this.stringIterator = this.GetStringIterator(this.stringList, 1);
+
+            Assert.IsTrue(this.stringIterator.IsDone());
+            this.stringIterator.Current();
+        }
+
+        [TestMethod]
+        [ExpectedException(typeof(IteratorOutOfRangeException))]
+        public void TestIntListIteratorWithStartIndexThrowsExceptionWhenFirstOrLastIsNotCalled()
+        {
+            this.intIterator = this.GetIntIterator(this.intList, 1);
+
+            Assert.IsTrue(this.intIterator.IsDone());
+            this.intIterator.Current();
+        }
+
+        [TestMethod]
+        [ExpectedException(typeof (IteratorOutOfRangeException))]
+        public void TestStringListIteratorWithStartAndEndIndexThrowsExceptionWhenFirstOrLastIsNotCalled()
+        {
+            this.stringIterator = this.GetStringIterator(this.stringList, 1, 2);
+
+            Assert.IsTrue(this.stringIterator.IsDone());
+            this.stringIterator.Current();
+        }
+
+        [TestMethod]
+        [ExpectedException(typeof(IteratorOutOfRangeException))]
+        public void TestIntListIteratorWithStartAndEndIndexThrowsExceptionWhenFirstOrLastIsNotCalled()
+        {
+            this.intIterator = this.GetIntIterator(this.intList, 1, 2);
+
+            Assert.IsTrue(this.intIterator.IsDone());
+            this.intIterator.Current();
+        }
+
+        [TestMethod]
+        [ExpectedException(typeof (IteratorOutOfRangeException))]
+        public void TestStringIteratorWithStartIndexThrowsExceptionWhenInvalidStartIndexNegative()
+        {
+            this.stringIterator = this.GetStringIterator(this.stringArray, -1);
+        }
+
+        [TestMethod]
+        [ExpectedException(typeof(IteratorOutOfRangeException))]
+        public void TestIntIteratorWithStartIndexThrowsExceptionWhenInvalidStartIndexNegative()
+        {
+            this.intIterator = this.GetIntIterator(this.intArray, -1);
+        }
+
+        [TestMethod]
+        [ExpectedException(typeof(IteratorOutOfRangeException))]
+        public void TestStringIteratorWithStartIndexThrowsExceptionWhenInvalidStartIndexEqualsLength()
+        {
+            this.stringIterator = this.GetStringIterator(this.stringArray, this.stringArray.Length);
+        }
+
+        [TestMethod]
+        [ExpectedException(typeof(IteratorOutOfRangeException))]
+        public void TestIntIteratorWithStartIndexThrowsExceptionWhenInvalidStartIndexEqualsLength()
+        {
+            this.intIterator = this.GetIntIterator(this.intArray, this.intArray.Length);
+        }
+
+        [TestMethod]
+        [ExpectedException(typeof(IteratorOutOfRangeException))]
+        public void TestStringIteratorWithStartIndexThrowsExceptionWhenInvalidStartIndexLargerThanLength()
+        {
+            this.stringIterator = this.GetStringIterator(this.stringArray, this.stringArray.Length + 1);
+        }
+
+        [TestMethod]
+        [ExpectedException(typeof(IteratorOutOfRangeException))]
+        public void TestIntIteratorWithStartIndexThrowsExceptionWhenInvalidStartIndexLargerThanLength()
+        {
+            this.intIterator = this.GetIntIterator(this.intArray, this.intArray.Length + 1);
+        }
+
+        [TestMethod]
+        [ExpectedException(typeof(IteratorOutOfRangeException))]
+        public void TestStringIteratorWithStartAndEndIndexThrowsExceptionWhenInvalidStartIndexNegative()
+        {
+            this.stringIterator = this.GetStringIterator(this.stringArray, -1, 1);
+        }
+
+        [TestMethod]
+        [ExpectedException(typeof(IteratorOutOfRangeException))]
+        public void TestIntIteratorWithStartAndEndIndexThrowsExceptionWhenInvalidStartIndexNegative()
+        {
+            this.intIterator = this.GetIntIterator(this.intArray, -1, 1);
+        }
+
+        [TestMethod]
+        [ExpectedException(typeof(IteratorOutOfRangeException))]
+        public void TestStringIteratorWithStartAndEndIndexThrowsExceptionWhenInvalidStartIndexEqualsLength()
+        {
+            this.stringIterator = this.GetStringIterator(this.stringArray, this.stringArray.Length, 1);
+        }
+
+        [TestMethod]
+        [ExpectedException(typeof(IteratorOutOfRangeException))]
+        public void TestIntIteratorWithStartAndEndIndexThrowsExceptionWhenInvalidStartIndexEqualsLength()
+        {
+            this.intIterator = this.GetIntIterator(this.intArray, this.intArray.Length, 1);
+        }
+
+        [TestMethod]
+        [ExpectedException(typeof(IteratorOutOfRangeException))]
+        public void TestStringIteratorWithStartAndEndIndexThrowsExceptionWhenInvalidStartIndexLargerThanLength()
+        {
+            this.stringIterator = this.GetStringIterator(this.stringArray, this.stringArray.Length + 1, 1);
+        }
+
+        [TestMethod]
+        [ExpectedException(typeof(IteratorOutOfRangeException))]
+        public void TestIntIteratorWithStartAndEndIndexThrowsExceptionWhenInvalidStartIndexLargerThanLength()
+        {
+            this.intIterator = this.GetIntIterator(this.intArray, this.intArray.Length + 1, 1);
+        }
+
+        [TestMethod]
+        [ExpectedException(typeof(IteratorOutOfRangeException))]
+        public void TestStringIteratorWithStartAndEndIndexThrowsExceptionWhenInvalidEndIndexNegative()
+        {
+            this.stringIterator = this.GetStringIterator(this.stringArray, 1, -1);
+        }
+
+        [TestMethod]
+        [ExpectedException(typeof(IteratorOutOfRangeException))]
+        public void TestIntIteratorWithStartAndEndIndexThrowsExceptionWhenInvalidEndIndexNegative()
+        {
+            this.intIterator = this.GetIntIterator(this.intArray, 1, -1);
+        }
+
+        [TestMethod]
+        [ExpectedException(typeof(IteratorOutOfRangeException))]
+        public void TestStringIteratorWithStartAndEndIndexThrowsExceptionWhenInvalidEndIndexEqualsLength()
+        {
+            this.stringIterator = this.GetStringIterator(this.stringArray, 1, this.stringArray.Length);
+        }
+
+        [TestMethod]
+        [ExpectedException(typeof(IteratorOutOfRangeException))]
+        public void TestIntIteratorWithStartAndEndIndexThrowsExceptionWhenInvalidEndIndexEqualsLength()
+        {
+            this.intIterator = this.GetIntIterator(this.intArray, 1, this.intArray.Length);
+        }
+
+        [TestMethod]
+        [ExpectedException(typeof(IteratorOutOfRangeException))]
+        public void TestStringIteratorWithStartAndEndIndexThrowsExceptionWhenInvalidEndIndexlargerThanLength()
+        {
+            this.stringIterator = this.GetStringIterator(this.stringArray, 1, this.stringArray.Length + 1);
+        }
+
+        [TestMethod]
+        [ExpectedException(typeof(IteratorOutOfRangeException))]
+        public void TestIntIteratorWithStartAndEndIndexThrowsExceptionWhenInvalidEndIndexLargerThanLength()
+        {
+            this.intIterator = this.GetIntIterator(this.intArray, 1, this.intArray.Length + 1);
+        }
+
+        [TestMethod]
+        public void TestForwardIterationWithStringArray()
+        {
+            this.stringIterator = this.GetStringIterator(this.stringArray);
+
+            this.stringIterator.First();
+            Assert.IsFalse(this.stringIterator.IsDone());
+            Assert.AreEqual(valueA, this.stringIterator.Current());
+
+            this.stringIterator.Next();
+            Assert.IsFalse(this.stringIterator.IsDone());
+            Assert.AreEqual(valueB, this.stringIterator.Current());
+
+            this.stringIterator.Next();
+            Assert.IsFalse(this.stringIterator.IsDone());
+            Assert.AreEqual(valueC, this.stringIterator.Current());
+
+            this.stringIterator.Next();
+            Assert.IsFalse(this.stringIterator.IsDone());
+            Assert.AreEqual(valueD, this.stringIterator.Current());
+        }
+
+        [TestMethod]
+        public void TestForwardIterationWithIntArray()
+        {
+            this.intIterator = this.GetIntIterator(this.intArray);
+
+            this.intIterator.First();
+            Assert.IsFalse(this.intIterator.IsDone());
+            Assert.AreEqual(valueOne, this.intIterator.Current());
+
+            this.intIterator.Next();
+            Assert.IsFalse(this.intIterator.IsDone());
+            Assert.AreEqual(valueTwo, this.intIterator.Current());
+
+            this.intIterator.Next();
+            Assert.IsFalse(this.intIterator.IsDone());
+            Assert.AreEqual(valueThree, this.intIterator.Current());
+
+            this.intIterator.Next();
+            Assert.IsFalse(this.intIterator.IsDone());
+            Assert.AreEqual(valueFour, this.intIterator.Current());
+        }
+
+        [TestMethod]
+        [ExpectedException(typeof (IteratorOutOfRangeException))]
+        public void TestForwardIterationWithStringArrayThrowsExceptionWhenOutOfBounds()
+        {
+            this.stringIterator = this.GetStringIterator(this.stringArray);
+
+            this.stringIterator.First();
+            this.stringIterator.Next();
+            this.stringIterator.Next();
+            this.stringIterator.Next();
+
+            this.stringIterator.Next();
+            Assert.IsTrue(this.stringIterator.IsDone());
+            this.stringIterator.Current();
+        }
+
+        [TestMethod]
+        [ExpectedException(typeof(IteratorOutOfRangeException))]
+        public void TestForwardIterationWithIntArrayThrowsExceptionWhenOutOfBounds()
+        {
+            this.intIterator = this.GetIntIterator(this.intArray);
+
+            this.intIterator.First();
+            this.intIterator.Next();
+            this.intIterator.Next();
+            this.intIterator.Next();
+
+            this.intIterator.Next();
+            Assert.IsTrue(this.intIterator.IsDone());
+            this.intIterator.Current();
+        }
+
+        [TestMethod]
+        public void TestForwardIterationWithStringArrayAndStartIndex()
+        {
+            this.stringIterator = this.GetStringIterator(this.stringArray, 1);
+
+            this.stringIterator.First();
+            Assert.IsFalse(this.stringIterator.IsDone());
+            Assert.AreEqual(valueB, this.stringIterator.Current());
+
+            this.stringIterator.Next();
+            Assert.IsFalse(this.stringIterator.IsDone());
+            Assert.AreEqual(valueC, this.stringIterator.Current());
+
+            this.stringIterator.Next();
+            Assert.IsFalse(this.stringIterator.IsDone());
+            Assert.AreEqual(valueD, this.stringIterator.Current());
+        }
+
+        [TestMethod]
+        public void TestForwardIterationWithIntArrayAndStartIndex()
+        {
+            this.intIterator = this.GetIntIterator(this.intArray, 1);
+
+            this.intIterator.First();
+            Assert.IsFalse(this.intIterator.IsDone());
+            Assert.AreEqual(valueTwo, this.intIterator.Current());
+
+            this.intIterator.Next();
+            Assert.IsFalse(this.intIterator.IsDone());
+            Assert.AreEqual(valueThree, this.intIterator.Current());
+
+            this.intIterator.Next();
+            Assert.IsFalse(this.intIterator.IsDone());
+            Assert.AreEqual(valueFour, this.intIterator.Current());
+        }
+
+        [TestMethod]
+        [ExpectedException(typeof(IteratorOutOfRangeException))]
+        public void TestForwardIterationWithStringArrayAndStartIndexThrowsExceptionWhenOutOfBounds()
+        {
+            this.stringIterator = this.GetStringIterator(this.stringArray);
+
+            this.stringIterator.First();
+            this.stringIterator.Next();
+            this.stringIterator.Next();
+
+            this.stringIterator.Next();
+            Assert.IsTrue(this.stringIterator.IsDone());
+            this.stringIterator.Current();
+        }
+
+        [TestMethod]
+        [ExpectedException(typeof(IteratorOutOfRangeException))]
+        public void TestForwardIterationWithIntArrayAndStartIndexThrowsExceptionWhenOutOfBounds()
+        {
+            this.intIterator = this.GetIntIterator(this.intArray);
+
+            this.intIterator.First();
+            this.intIterator.Next();
+            this.intIterator.Next();
+
+            this.intIterator.Next();
+            Assert.IsTrue(this.intIterator.IsDone());
+            this.intIterator.Current();
+        }
+
+        [TestMethod]
+        public void TestForwardIterationWithStringArrayAndStartAndEndIndex()
+        {
+            this.stringIterator = this.GetStringIterator(this.stringArray, 1, 2);
+
+            this.stringIterator.First();
+            Assert.IsFalse(this.stringIterator.IsDone());
+            Assert.AreEqual(valueB, this.stringIterator.Current());
+
+            this.stringIterator.Next();
+            Assert.IsFalse(this.stringIterator.IsDone());
+            Assert.AreEqual(valueC, this.stringIterator.Current());
+        }
+
+        [TestMethod]
+        public void TestForwardIterationWithIntArrayAndStartAndEndIndex()
+        {
+            this.intIterator = this.GetIntIterator(this.intArray, 1, 2);
+
+            this.intIterator.First();
+            Assert.IsFalse(this.intIterator.IsDone());
+            Assert.AreEqual(valueTwo, this.intIterator.Current());
+
+            this.intIterator.Next();
+            Assert.IsFalse(this.intIterator.IsDone());
+            Assert.AreEqual(valueThree, this.intIterator.Current());
+        }
+
+        [TestMethod]
+        [ExpectedException(typeof(IteratorOutOfRangeException))]
+        public void TestForwardIterationWithStringArrayAndStartIndexAndEndIndexThrowsExceptionWhenOutOfBounds()
+        {
+            this.stringIterator = this.GetStringIterator(this.stringArray);
+
+            this.stringIterator.First();
+            this.stringIterator.Next();
+
+            this.stringIterator.Next();
+            Assert.IsTrue(this.stringIterator.IsDone());
+            this.stringIterator.Current();
+        }
+
+        [TestMethod]
+        [ExpectedException(typeof(IteratorOutOfRangeException))]
+        public void TestForwardIterationWithIntArrayAndStartIndexAndEndIndexThrowsExceptionWhenOutOfBounds()
+        {
+            this.intIterator = this.GetIntIterator(this.intArray);
+
+            this.intIterator.First();
+            this.intIterator.Next();
+
+            this.intIterator.Next();
+            Assert.IsTrue(this.intIterator.IsDone());
+            this.intIterator.Current();
+        }
+
+        [TestMethod]
+        public void TestForwardIterationWithStringList()
+        {
+            this.stringIterator = this.GetStringIterator(this.stringList);
+
+            this.stringIterator.First();
+            Assert.IsFalse(this.stringIterator.IsDone());
+            Assert.AreEqual(valueA, this.stringIterator.Current());
+
+            this.stringIterator.Next();
+            Assert.IsFalse(this.stringIterator.IsDone());
+            Assert.AreEqual(valueB, this.stringIterator.Current());
+
+            this.stringIterator.Next();
+            Assert.IsFalse(this.stringIterator.IsDone());
+            Assert.AreEqual(valueC, this.stringIterator.Current());
+
+            this.stringIterator.Next();
+            Assert.IsFalse(this.stringIterator.IsDone());
+            Assert.AreEqual(valueD, this.stringIterator.Current());
+        }
+
+        [TestMethod]
+        public void TestForwardIterationWithIntList()
+        {
+            this.intIterator = this.GetIntIterator(this.intList);
+
+            this.intIterator.First();
+            Assert.IsFalse(this.intIterator.IsDone());
+            Assert.AreEqual(valueOne, this.intIterator.Current());
+
+            this.intIterator.Next();
+            Assert.IsFalse(this.intIterator.IsDone());
+            Assert.AreEqual(valueTwo, this.intIterator.Current());
+
+            this.intIterator.Next();
+            Assert.IsFalse(this.intIterator.IsDone());
+            Assert.AreEqual(valueThree, this.intIterator.Current());
+
+            this.intIterator.Next();
+            Assert.IsFalse(this.intIterator.IsDone());
+            Assert.AreEqual(valueFour, this.intIterator.Current());
+        }
+
+        [TestMethod]
+        [ExpectedException(typeof(IteratorOutOfRangeException))]
+        public void TestForwardIterationWithStringListThrowsExceptionWhenOutOfBounds()
+        {
+            this.stringIterator = this.GetStringIterator(this.stringList);
+
+            this.stringIterator.First();
+            this.stringIterator.Next();
+            this.stringIterator.Next();
+            this.stringIterator.Next();
+
+            this.stringIterator.Next();
+            Assert.IsTrue(this.stringIterator.IsDone());
+            this.stringIterator.Current();
+        }
+
+        [TestMethod]
+        [ExpectedException(typeof(IteratorOutOfRangeException))]
+        public void TestForwardIterationWithIntListThrowsExceptionWhenOutOfBounds()
+        {
+            this.intIterator = this.GetIntIterator(this.intList);
+
+            this.intIterator.First();
+            this.intIterator.Next();
+            this.intIterator.Next();
+            this.intIterator.Next();
+
+            this.intIterator.Next();
+            Assert.IsTrue(this.intIterator.IsDone());
+            this.intIterator.Current();
+        }
+
+        [TestMethod]
+        public void TestForwardIterationWithStringListAndStartIndex()
+        {
+            this.stringIterator = this.GetStringIterator(this.stringList, 1);
+
+            this.stringIterator.First();
+            Assert.IsFalse(this.stringIterator.IsDone());
+            Assert.AreEqual(valueB, this.stringIterator.Current());
+
+            this.stringIterator.Next();
+            Assert.IsFalse(this.stringIterator.IsDone());
+            Assert.AreEqual(valueC, this.stringIterator.Current());
+
+            this.stringIterator.Next();
+            Assert.IsFalse(this.stringIterator.IsDone());
+            Assert.AreEqual(valueD, this.stringIterator.Current());
+        }
+
+        [TestMethod]
+        public void TestForwardIterationWithIntListAndStartIndex()
+        {
+            this.intIterator = this.GetIntIterator(this.intList, 1);
+
+            this.intIterator.First();
+            Assert.IsFalse(this.intIterator.IsDone());
+            Assert.AreEqual(valueTwo, this.intIterator.Current());
+
+            this.intIterator.Next();
+            Assert.IsFalse(this.intIterator.IsDone());
+            Assert.AreEqual(valueThree, this.intIterator.Current());
+
+            this.intIterator.Next();
+            Assert.IsFalse(this.intIterator.IsDone());
+            Assert.AreEqual(valueFour, this.intIterator.Current());
+        }
+
+        [TestMethod]
+        [ExpectedException(typeof(IteratorOutOfRangeException))]
+        public void TestForwardIterationWithStringListAndStartIndexThrowsExceptionWhenOutOfBounds()
+        {
+            this.stringIterator = this.GetStringIterator(this.stringList, 1);
+
+            this.stringIterator.First();
+            this.stringIterator.Next();
+            this.stringIterator.Next();
+
+            this.stringIterator.Next();
+            Assert.IsTrue(this.stringIterator.IsDone());
+            this.stringIterator.Current();
+        }
+
+        [TestMethod]
+        [ExpectedException(typeof(IteratorOutOfRangeException))]
+        public void TestForwardIterationWithIntListAndStartIndexThrowsExceptionWhenOutOfBounds()
+        {
+            this.intIterator = this.GetIntIterator(this.intList, 1);
+
+            this.intIterator.First();
+            this.intIterator.Next();
+            this.intIterator.Next();
+
+            this.intIterator.Next();
+            Assert.IsTrue(this.intIterator.IsDone());
+            this.intIterator.Current();
+        }
+
+        [TestMethod]
+        public void TestForwardIterationWithStringListAndStartAndEndIndex()
+        {
+            this.stringIterator = this.GetStringIterator(this.stringList, 1, 2);
+
+            this.stringIterator.First();
+            Assert.IsFalse(this.stringIterator.IsDone());
+            Assert.AreEqual(valueB, this.stringIterator.Current());
+
+            this.stringIterator.Next();
+            Assert.IsFalse(this.stringIterator.IsDone());
+            Assert.AreEqual(valueC, this.stringIterator.Current());
+        }
+
+        [TestMethod]
+        public void TestForwardIterationWithIntListAndStartAndEndIndex()
+        {
+            this.intIterator = this.GetIntIterator(this.intList, 1, 2);
+
+            this.intIterator.First();
+            Assert.IsFalse(this.intIterator.IsDone());
+            Assert.AreEqual(valueTwo, this.intIterator.Current());
+
+            this.intIterator.Next();
+            Assert.IsFalse(this.intIterator.IsDone());
+            Assert.AreEqual(valueThree, this.intIterator.Current());
+        }
+
+        [TestMethod]
+        [ExpectedException(typeof(IteratorOutOfRangeException))]
+        public void TestForwardIterationWithStringListAndStartIndexAndEndIndexThrowsExceptionWhenOutOfBounds()
+        {
+            this.stringIterator = this.GetStringIterator(this.stringList, 1, 2);
+
+            this.stringIterator.First();
+            this.stringIterator.Next();
+
+            this.stringIterator.Next();
+            Assert.IsTrue(this.stringIterator.IsDone());
+            this.stringIterator.Current();
+        }
+
+        [TestMethod]
+        [ExpectedException(typeof(IteratorOutOfRangeException))]
+        public void TestForwardIterationWithIntListAndStartIndexAndEndIndexThrowsExceptionWhenOutOfBounds()
+        {
+            this.intIterator = this.GetIntIterator(this.intList, 1, 2);
+
+            this.intIterator.First();
+            this.intIterator.Next();
+
+            this.intIterator.Next();
+            Assert.IsTrue(this.intIterator.IsDone());
+            this.intIterator.Current();
+        }
+
+        [TestMethod]
+        public void TestBackwardIterationWithStringArray()
+        {
+            this.stringIterator = this.GetStringIterator(this.stringArray);
+
+            this.stringIterator.Last();
+            Assert.IsFalse(this.stringIterator.IsDone());
+            Assert.AreEqual(valueD, this.stringIterator.Current());
+
+            this.stringIterator.Previous();
+            Assert.IsFalse(this.stringIterator.IsDone());
+            Assert.AreEqual(valueC, this.stringIterator.Current());
+
+            this.stringIterator.Previous();
+            Assert.IsFalse(this.stringIterator.IsDone());
+            Assert.AreEqual(valueB, this.stringIterator.Current());
+
+            this.stringIterator.Previous();
+            Assert.IsFalse(this.stringIterator.IsDone());
+            Assert.AreEqual(valueA, this.stringIterator.Current());
+        }
+
+        [TestMethod]
+        public void TestBackwardIterationWithIntArray()
+        {
+            this.intIterator = this.GetIntIterator(this.intArray);
+
+            this.intIterator.Last();
+            Assert.IsFalse(this.intIterator.IsDone());
+            Assert.AreEqual(valueFour, this.intIterator.Current());
+
+            this.intIterator.Previous();
+            Assert.IsFalse(this.intIterator.IsDone());
+            Assert.AreEqual(valueThree, this.intIterator.Current());
+
+            this.intIterator.Previous();
+            Assert.IsFalse(this.intIterator.IsDone());
+            Assert.AreEqual(valueTwo, this.intIterator.Current());
+
+            this.intIterator.Previous();
+            Assert.IsFalse(this.intIterator.IsDone());
+            Assert.AreEqual(valueOne, this.intIterator.Current());
+        }
+
+        [TestMethod]
+        [ExpectedException(typeof (IteratorOutOfRangeException))]
+        public void TestBackwardIterationWithStringArrayThrowsExceptionWhenOutOfBounds()
+        {
+            this.stringIterator = this.GetStringIterator(this.stringArray);
+
+            this.stringIterator.Last();
+            this.stringIterator.Previous();
+            this.stringIterator.Previous();
+            this.stringIterator.Previous();
+
+            this.stringIterator.Previous();
+            Assert.IsTrue(this.stringIterator.IsDone());
+            this.stringIterator.Current();
+        }
+
+        [TestMethod]
+        [ExpectedException(typeof(IteratorOutOfRangeException))]
+        public void TestBackwardIterationWithIntArrayThrowsExceptionWhenOutOfBounds()
+        {
+            this.intIterator = this.GetIntIterator(this.intArray);
+
+            this.intIterator.Last();
+            this.intIterator.Previous();
+            this.intIterator.Previous();
+            this.intIterator.Previous();
+
+            this.intIterator.Previous();
+            Assert.IsTrue(this.intIterator.IsDone());
+            this.intIterator.Current();
+        }
+
+        [TestMethod]
+        public void TestBackwardIterationWithStringArrayAndStartIndex()
+        {
+            this.stringIterator = this.GetStringIterator(this.stringArray, 1);
+
+            this.stringIterator.Previous();
+            Assert.IsFalse(this.stringIterator.IsDone());
+            Assert.AreEqual(valueC, this.stringIterator.Current());
+
+            this.stringIterator.Previous();
+            Assert.IsFalse(this.stringIterator.IsDone());
+            Assert.AreEqual(valueB, this.stringIterator.Current());
+
+            this.stringIterator.Previous();
+            Assert.IsFalse(this.stringIterator.IsDone());
+            Assert.AreEqual(valueA, this.stringIterator.Current());
+        }
+
+        [TestMethod]
+        public void TestBackwardIterationWithIntArrayAndStartIndex()
+        {
+            this.intIterator = this.GetIntIterator(this.intArray, 1);
+
+            this.intIterator.Last();
+            Assert.IsFalse(this.intIterator.IsDone());
+            Assert.AreEqual(valueThree, this.intIterator.Current());
+
+            this.intIterator.Previous();
+            Assert.IsFalse(this.intIterator.IsDone());
+            Assert.AreEqual(valueTwo, this.intIterator.Current());
+
+            this.intIterator.Previous();
+            Assert.IsFalse(this.intIterator.IsDone());
+            Assert.AreEqual(valueOne, this.intIterator.Current());
+        }
+
+        [TestMethod]
+        [ExpectedException(typeof(IteratorOutOfRangeException))]
+        public void TestBackwardIterationWithStringArrayAndStartIndexThrowsExceptionWhenOutOfBounds()
+        {
+            this.stringIterator = this.GetStringIterator(this.stringArray, 1);
+
+            this.stringIterator.Last();
+            this.stringIterator.Previous();
+            this.stringIterator.Previous();
+
+            this.stringIterator.Previous();
+            Assert.IsTrue(this.stringIterator.IsDone());
+            this.stringIterator.Current();
+        }
+
+        [TestMethod]
+        [ExpectedException(typeof(IteratorOutOfRangeException))]
+        public void TestBackwardIterationWithIntArrayAndStartIndexThrowsExceptionWhenOutOfBounds()
+        {
+            this.intIterator = this.GetIntIterator(this.intArray, 1);
+
+            this.intIterator.Last();
+            this.intIterator.Previous();
+            this.intIterator.Previous();
+
+            this.intIterator.Previous();
+            Assert.IsTrue(this.intIterator.IsDone());
+            this.intIterator.Current();
+        }
+
+        [TestMethod]
+        public void TestBackwardIterationWithStringArrayAndStartIndexAndEndIndex()
+        {
+            this.stringIterator = this.GetStringIterator(this.stringArray, 1, 2);
+
+            this.stringIterator.Previous();
+            Assert.IsFalse(this.stringIterator.IsDone());
+            Assert.AreEqual(valueC, this.stringIterator.Current());
+
+            this.stringIterator.Previous();
+            Assert.IsFalse(this.stringIterator.IsDone());
+            Assert.AreEqual(valueB, this.stringIterator.Current());
+        }
+
+        [TestMethod]
+        public void TestBackwardIterationWithIntArrayAndStartIndexAndEndIndex()
+        {
+            this.intIterator = this.GetIntIterator(this.intArray, 1, 2);
+
+            this.intIterator.Last();
+            Assert.IsFalse(this.intIterator.IsDone());
+            Assert.AreEqual(valueThree, this.intIterator.Current());
+
+            this.intIterator.Previous();
+            Assert.IsFalse(this.intIterator.IsDone());
+            Assert.AreEqual(valueTwo, this.intIterator.Current());
+        }
+
+        [TestMethod]
+        [ExpectedException(typeof(IteratorOutOfRangeException))]
+        public void TestBackwardIterationWithStringArrayAndStartIndexAndEndIndexThrowsExceptionWhenOutOfBounds()
+        {
+            this.stringIterator = this.GetStringIterator(this.stringArray, 1, 2);
+
+            this.stringIterator.Last();
+            this.stringIterator.Previous();
+
+            this.stringIterator.Previous();
+            Assert.IsTrue(this.stringIterator.IsDone());
+            this.stringIterator.Current();
+        }
+
+        [TestMethod]
+        [ExpectedException(typeof(IteratorOutOfRangeException))]
+        public void TestBackwardIterationWithIntArrayAndStartIndexAndEndIndexThrowsExceptionWhenOutOfBounds()
+        {
+            this.intIterator = this.GetIntIterator(this.intArray, 1, 2);
+
+            this.intIterator.Last();
+            this.intIterator.Previous();
+
+            this.intIterator.Previous();
+            Assert.IsTrue(this.intIterator.IsDone());
+            this.intIterator.Current();
+        }
+
+        [TestMethod]
+        public void TestBackwardIterationWithStringList()
+        {
+            this.stringIterator = this.GetStringIterator(this.stringList);
+
+            this.stringIterator.Last();
+            Assert.IsFalse(this.stringIterator.IsDone());
+            Assert.AreEqual(valueD, this.stringIterator.Current());
+
+            this.stringIterator.Previous();
+            Assert.IsFalse(this.stringIterator.IsDone());
+            Assert.AreEqual(valueC, this.stringIterator.Current());
+
+            this.stringIterator.Previous();
+            Assert.IsFalse(this.stringIterator.IsDone());
+            Assert.AreEqual(valueB, this.stringIterator.Current());
+
+            this.stringIterator.Previous();
+            Assert.IsFalse(this.stringIterator.IsDone());
+            Assert.AreEqual(valueA, this.stringIterator.Current());
+        }
+
+        [TestMethod]
+        public void TestBackwardIterationWithIntList()
+        {
+            this.intIterator = this.GetIntIterator(this.intList);
+
+            this.intIterator.Last();
+            Assert.IsFalse(this.intIterator.IsDone());
+            Assert.AreEqual(valueFour, this.intIterator.Current());
+
+            this.intIterator.Previous();
+            Assert.IsFalse(this.intIterator.IsDone());
+            Assert.AreEqual(valueThree, this.intIterator.Current());
+
+            this.intIterator.Previous();
+            Assert.IsFalse(this.intIterator.IsDone());
+            Assert.AreEqual(valueTwo, this.intIterator.Current());
+
+            this.intIterator.Previous();
+            Assert.IsFalse(this.intIterator.IsDone());
+            Assert.AreEqual(valueOne, this.intIterator.Current());
+        }
+
+        [TestMethod]
+        [ExpectedException(typeof(IteratorOutOfRangeException))]
+        public void TestBackwardIterationWithStringListThrowsExceptionWhenOutOfBounds()
+        {
+            this.stringIterator = this.GetStringIterator(this.stringList);
+
+            this.stringIterator.Last();
+            this.stringIterator.Previous();
+            this.stringIterator.Previous();
+            this.stringIterator.Previous();
+
+            this.stringIterator.Previous();
+            Assert.IsTrue(this.stringIterator.IsDone());
+            this.stringIterator.Current();
+        }
+
+        [TestMethod]
+        [ExpectedException(typeof(IteratorOutOfRangeException))]
+        public void TestBackwardIterationWithIntListThrowsExceptionWhenOutOfBounds()
+        {
+            this.intIterator = this.GetIntIterator(this.intList);
+
+            this.intIterator.Last();
+            this.intIterator.Previous();
+            this.intIterator.Previous();
+            this.intIterator.Previous();
+
+            this.intIterator.Previous();
+            Assert.IsTrue(this.intIterator.IsDone());
+            this.intIterator.Current();
+        }
+
+        [TestMethod]
+        public void TestBackwardIterationWithStringListAndStartIndex()
+        {
+            this.stringIterator = this.GetStringIterator(this.stringList, 1);
+
+            this.stringIterator.Previous();
+            Assert.IsFalse(this.stringIterator.IsDone());
+            Assert.AreEqual(valueC, this.stringIterator.Current());
+
+            this.stringIterator.Previous();
+            Assert.IsFalse(this.stringIterator.IsDone());
+            Assert.AreEqual(valueB, this.stringIterator.Current());
+
+            this.stringIterator.Previous();
+            Assert.IsFalse(this.stringIterator.IsDone());
+            Assert.AreEqual(valueA, this.stringIterator.Current());
+        }
+
+        [TestMethod]
+        public void TestBackwardIterationWithIntListAndStartIndex()
+        {
+            this.intIterator = this.GetIntIterator(this.intList, 1);
+
+            this.intIterator.Last();
+            Assert.IsFalse(this.intIterator.IsDone());
+            Assert.AreEqual(valueThree, this.intIterator.Current());
+
+            this.intIterator.Previous();
+            Assert.IsFalse(this.intIterator.IsDone());
+            Assert.AreEqual(valueTwo, this.intIterator.Current());
+
+            this.intIterator.Previous();
+            Assert.IsFalse(this.intIterator.IsDone());
+            Assert.AreEqual(valueOne, this.intIterator.Current());
+        }
+
+        [TestMethod]
+        [ExpectedException(typeof(IteratorOutOfRangeException))]
+        public void TestBackwardIterationWithStringListAndStartIndexThrowsExceptionWhenOutOfBounds()
+        {
+            this.stringIterator = this.GetStringIterator(this.stringList, 1);
+
+            this.stringIterator.Last();
+            this.stringIterator.Previous();
+            this.stringIterator.Previous();
+
+            this.stringIterator.Previous();
+            Assert.IsTrue(this.stringIterator.IsDone());
+            this.stringIterator.Current();
+        }
+
+        [TestMethod]
+        [ExpectedException(typeof(IteratorOutOfRangeException))]
+        public void TestBackwardIterationWithIntListAndStartIndexThrowsExceptionWhenOutOfBounds()
+        {
+            this.intIterator = this.GetIntIterator(this.intList, 1);
+
+            this.intIterator.Last();
+            this.intIterator.Previous();
+            this.intIterator.Previous();
+
+            this.intIterator.Previous();
+            Assert.IsTrue(this.intIterator.IsDone());
+            this.intIterator.Current();
+        }
+
+        [TestMethod]
+        public void TestBackwardIterationWithStringListAndStartIndexAndEndIndex()
+        {
+            this.stringIterator = this.GetStringIterator(this.stringList, 1, 2);
+
+            this.stringIterator.Previous();
+            Assert.IsFalse(this.stringIterator.IsDone());
+            Assert.AreEqual(valueC, this.stringIterator.Current());
+
+            this.stringIterator.Previous();
+            Assert.IsFalse(this.stringIterator.IsDone());
+            Assert.AreEqual(valueB, this.stringIterator.Current());
+        }
+
+        [TestMethod]
+        public void TestBackwardIterationWithIntListAndStartIndexAndEndIndex()
+        {
+            this.intIterator = this.GetIntIterator(this.intList, 1, 2);
+
+            this.intIterator.Last();
+            Assert.IsFalse(this.intIterator.IsDone());
+            Assert.AreEqual(valueThree, this.intIterator.Current());
+
+            this.intIterator.Previous();
+            Assert.IsFalse(this.intIterator.IsDone());
+            Assert.AreEqual(valueTwo, this.intIterator.Current());
+        }
+
+        [TestMethod]
+        [ExpectedException(typeof(IteratorOutOfRangeException))]
+        public void TestBackwardIterationWithStringListAndStartIndexAndEndIndexThrowsExceptionWhenOutOfBounds()
+        {
+            this.stringIterator = this.GetStringIterator(this.stringList, 1, 2);
+
+            this.stringIterator.Last();
+            this.stringIterator.Previous();
+
+            this.stringIterator.Previous();
+            Assert.IsTrue(this.stringIterator.IsDone());
+            this.stringIterator.Current();
+        }
+
+        [TestMethod]
+        [ExpectedException(typeof(IteratorOutOfRangeException))]
+        public void TestBackwardIterationWithIntListAndStartIndexAndEndIndexThrowsExceptionWhenOutOfBounds()
+        {
+            this.intIterator = this.GetIntIterator(this.intList, 1, 2);
+
+            this.intIterator.Last();
+            this.intIterator.Previous();
+
+            this.intIterator.Previous();
+            Assert.IsTrue(this.intIterator.IsDone());
+            this.intIterator.Current();
+        }
     }
 }

@@ -7,5 +7,9 @@ namespace WeirdChess.Utilities
     public static class Messages
     {
         public const string DrawableObjectNotSet = "Drawable Object is not set for object {0}";
+        public const string CollectionCannotBeNull = "Collection cannot be null";
+        public const string IndexCannotBeNegative = "Index cannot be less than zero";
+        public const string StartIndexGreaterThanEndIndex = "Start index cannot be greater than End index";
+        public const string EndIndexGreaterOrEqualToLength = "End index must be less than collection length";
     }
 }

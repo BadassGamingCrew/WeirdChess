@@ -4,22 +4,56 @@ namespace WeirdChess.Utilities
     using System;
     using System.Collections.Generic;
     using Interfaces;
+    using Exceptions;
     /// <summary>
     /// Implementation of IIterator
     /// </summary>
     /// <typeparam name="T">The generic type of the IIterator object</typeparam>
     public class Iterator<T> : IIterator<T>
     {
-        private ICollection<T> collection; 
+        private readonly ICollection<T> collection;
+        private readonly int startIndex;
+        private readonly int endIndex;
+        private int currentIndex;
         /// <summary>
         /// Constructor which takes an ICollection as argument.
         /// The ICollection generic type should be the same as the IIterator generic type. 
         /// </summary>
         /// <param name="collection">The collection that IIterator will iterate through</param>
         public Iterator(ICollection<T> collection)
+            : this(collection, 0)
         {
-            this.collection = collection;
         }
+        /// <summary>
+        /// Constructor which takes ICollection and startIndex arguments
+        /// </summary>
+        /// <param name="collection">The collection that IIterator will iterate through</param>
+        /// <param name="startIndex">The index of the first element</param>
+        public Iterator(ICollection<T> collection, int startIndex)
+            : this(collection, startIndex, collection.Count - 1)
+        {
+        }
+        /// <summary>
+        /// Constructor which takes ICollection, startIndex and endIndex arguments
+        /// </summary>
+        /// <param name="collection">The collection that IIterator will iterate through</param>
+        /// <param name="startIndex">The index of the first element</param>
+        /// <param name="endIndex">The index of the last element</param>
+        public Iterator(ICollection<T> collection, int startIndex, int endIndex)
+        {
+            this.ValidateCollection(collection);
+            this.collection = collection;
+
+            this.ValidateIndex(startIndex);
+            this.startIndex = startIndex;
+
+            this.ValidateIndex(endIndex);
+            this.endIndex = endIndex;
+
+            this.CompareStartAndEndIndex();
+
+            this.currentIndex = -1;
+        } 
 
         public void First()
         {
@@ -49,6 +83,44 @@ namespace WeirdChess.Utilities
         public bool IsDone()
         {
             throw new NotImplementedException();
+        }
+
+        private void ValidateCollection(ICollection<T> collection)
+        {
+            if (collection.Equals(default(ICollection<T>)))
+            {
+                throw new IteratorOutOfRangeException("collection", Messages.CollectionCannotBeNull);
+            }
+        }
+
+        private void ValidateIndex(int index)
+        {
+            if (index < 0)
+            {
+                throw new IteratorOutOfRangeException("index", Messages.IndexCannotBeNegative);
+            }
+        }
+
+        private void CompareStartAndEndIndex()
+        {
+            this.CheckStartIndexIsLessOrEqualToEndIndex();
+            this.CheckEndIndexIsLessThanLength();
+        }
+
+        private void CheckStartIndexIsLessOrEqualToEndIndex()
+        {
+            if (this.startIndex > this.endIndex)
+            {
+                throw new IteratorOutOfRangeException("startIndex", Messages.StartIndexGreaterThanEndIndex);
+            }
+        }
+
+        private void CheckEndIndexIsLessThanLength()
+        {
+            if (this.endIndex >= this.collection.Count)
+            {
+                throw new IteratorOutOfRangeException("endIndex", Messages.EndIndexGreaterOrEqualToLength);
+            }
         }
     }
 }

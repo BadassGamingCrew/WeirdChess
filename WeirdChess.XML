@@ -62,6 +62,17 @@
             Enumeration for the Sound Options
             </summary>
         </member>
+        <member name="T:WeirdChess.Exceptions.DrawableComponentException">
+            <summary>
+            Exception for DrawableComponent objects. Extends System ArgumentException
+            </summary>
+        </member>
+        <member name="M:WeirdChess.Exceptions.DrawableComponentException.#ctor(System.String)">
+            <summary>
+            Constructor that takes a string message as argument
+            </summary>
+            <param name="message">The error message to be passed to the base class</param>
+        </member>
         <member name="T:WeirdChess.Exceptions.GameScreenTypeException">
             <summary>
             Exception class for GameScreenType enumeration.
@@ -96,20 +107,54 @@
             The main entry point for the application.
             </summary>
         </member>
-        <member name="T:WeirdChess.Interfaces.IDeserialiser`1">
+        <member name="T:WeirdChess.Infrastructure.DrawableScreen">
             <summary>
-            Interface for Deserialiser objects
+            Abstract class for Drawable Screen objects. Implements IDrawable
             </summary>
-            <typeparam name="T">Specifies the return type of the Deserialise method. 
-            Can only be an object, which implments ISavable</typeparam>
         </member>
-        <member name="M:WeirdChess.Interfaces.IDeserialiser`1.Deserialize(System.String)">
+        <member name="T:WeirdChess.Interfaces.IDrawable">
             <summary>
-            When called, reads the file, 
-            specified by the FilePath property and returns the information from it, as a new ISavable object.
+            Interface for Drawable objects
             </summary>
-            <param name="filePath">The path to the target file</param>
-            <returns>A new ISavable object, containing the deserialised information.</returns>
+        </member>
+        <member name="M:WeirdChess.Interfaces.IDrawable.Draw">
+            <summary>
+            Method for drawing notification
+            </summary>
+        </member>
+        <member name="M:WeirdChess.Infrastructure.DrawableScreen.#ctor(WeirdChess.Interfaces.IGameScreen,Microsoft.Xna.Framework.Graphics.SpriteBatch)">
+            <summary>
+            Constructor for the Drawable Screen objects. Takes IGameScreen and SpriteBatch as arguments
+            </summary>
+            <param name="gameScreen">The IGameScreen object associated with this DrawableScreen</param>
+            <param name="spriteBatch">The SpriteBatch used for the Draw method</param>
+        </member>
+        <member name="M:WeirdChess.Infrastructure.DrawableScreen.UpdateSpriteBatch(Microsoft.Xna.Framework.Graphics.SpriteBatch)">
+            <summary>
+            
+            </summary>
+            <param name="spriteBatch"></param>
+        </member>
+        <member name="T:WeirdChess.Interfaces.IComponent">
+            <summary>
+            Interface for Component objects
+            </summary>
+        </member>
+        <member name="M:WeirdChess.Interfaces.IComponent.Initilize">
+            <summary>
+            Method for initializing the Component object.
+            </summary>
+        </member>
+        <member name="M:WeirdChess.Interfaces.IComponent.Update">
+            <summary>
+            Method for update notification.
+            </summary>
+        </member>
+        <member name="T:WeirdChess.Infrastructure.Screen">
+            <summary>
+            Abstract class for Screen objects. 
+            Implements IGameScreen, IComponent and IDrawableComponent
+            </summary>
         </member>
         <member name="T:WeirdChess.Interfaces.IGameScreen">
             <summary>
@@ -128,6 +173,51 @@
             False if the curent screen is not on focus.
             </summary>
         </member>
+        <member name="T:WeirdChess.Interfaces.IDrawableComponent">
+            <summary>
+            Interface for Drawable Components
+            </summary>
+        </member>
+        <member name="P:WeirdChess.Interfaces.IDrawableComponent.DrawableComponent">
+            <summary>
+            Property which holds the Drawable Component of the Component object
+            </summary>
+        </member>
+        <member name="M:WeirdChess.Infrastructure.Screen.#ctor(WeirdChess.Enums.GameScreenType)">
+            <summary>
+            Consctructor for Screen objects. Takes a GameScreenType enum as argument
+            </summary>
+            <param name="type">The Type of the Screen object</param>
+        </member>
+        <member name="P:WeirdChess.Infrastructure.Screen.Type">
+            <summary>
+            GameScreenType property. The setter is private since the value should be read-only.
+            </summary>
+        </member>
+        <member name="P:WeirdChess.Infrastructure.Screen.Displayed">
+            <summary>
+            Boolean property specifying whether the screen should be displayed, or not.
+            </summary>
+        </member>
+        <member name="P:WeirdChess.Infrastructure.Screen.DrawableComponent">
+            <summary>
+            Property containing the IDrawable object for this current object.
+            The setter is protected, since the child classes will be responcible for specifying the IDrawable object.
+            </summary>
+        </member>
+        <member name="T:WeirdChess.Infrastructure.ScreenController">
+            <summary>
+            IScreenController implementation.
+            Extends GameComponent.
+            </summary>
+        </member>
+        <member name="T:WeirdChess.Interfaces.IScreenController">
+            <summary>
+            Interface for Screen Controller objects.
+            Provides methods for managing the IGameScreen collection.
+            Also provides an iterator for navigating between the different IGameScreen objects.
+            </summary>
+        </member>
         <member name="T:WeirdChess.Interfaces.IIterable`1">
             <summary>
             Interface for iterable objects.
@@ -139,6 +229,71 @@
             Method for retreiving an iterator of generic type T
             </summary>
             <returns>An iterator for navigating between objects of generic type T</returns>
+        </member>
+        <member name="M:WeirdChess.Interfaces.IScreenController.SetScreen(WeirdChess.Enums.GameScreenType,WeirdChess.Interfaces.IGameScreen)">
+            <summary>
+            Changes the value for the GameScreenType argument, to the IGameScreen argument.
+            </summary>
+            <exception cref="T:WeirdChess.Exceptions.GameScreenTypeException">Thrown if screenType value does not match the gameScreen.Type value</exception>
+            <param name="screenType">The screen type for the IGameScreen that's to be replaced.</param>
+            <param name="gameScreen">The new IGameScreen object</param>
+        </member>
+        <member name="M:WeirdChess.Interfaces.IScreenController.AddScreen(WeirdChess.Enums.GameScreenType,WeirdChess.Interfaces.IGameScreen)">
+            <summary>
+            Adds a new GameScreenType/IGameScreen pair to the IGameScreen collection.
+            </summary>
+            <exception cref="T:WeirdChess.Exceptions.GameScreenTypeException">Thrown if the a pair with the same GameScreenType already exists.</exception>
+            <param name="screenType">The GameScreenType value for the new pair.</param>
+            <param name="gameScreen">The IGameScreen object for the new pair.</param>
+        </member>
+        <member name="M:WeirdChess.Interfaces.IScreenController.DeleteScreen(WeirdChess.Enums.GameScreenType)">
+            <summary>
+            Deletes the GameScreenType/IGameScreen pair, described by the screenType argument.
+            </summary>
+            <param name="screenType">The GameScreenType for the GameScreenType/IGameScreen pair that will be deleted.</param>
+            <exception cref="T:WeirdChess.Exceptions.GameScreenTypeException">Thrown if method is called and Contains(screenType) returns FALSE.</exception>
+            <returns>Returns the IGameScreen object, from the deleted GameScreenType/IGameScreen pair.</returns>
+        </member>
+        <member name="M:WeirdChess.Interfaces.IScreenController.GetScreen(WeirdChess.Enums.GameScreenType)">
+            <summary>
+            Attempts to get the IGameScreen object, paired with the GameScreenType argument.
+            </summary>
+            <exception cref="T:WeirdChess.Exceptions.GameScreenTypeException">
+            Thrown if the method is called and Contains(screenType) returns FALSE.
+            </exception>
+            <param name="screenType">The GameScreenType of the IGameScreen that's to be retrieved.</param>
+            <returns>The IGameScreen object that's paired with the screenType argument.</returns>
+        </member>
+        <member name="M:WeirdChess.Interfaces.IScreenController.Contains(WeirdChess.Enums.GameScreenType)">
+            <summary>
+            Checks whether the IGameScreen collection contains a pair, with the provided GameScreenType.
+            </summary>
+            <param name="screenType">The GameScreenType for the GameScreenType/IGameScreen pair.</param>
+            <returns>
+            True if the pair is found.
+            False if the pair is not found. 
+            </returns>
+        </member>
+        <member name="M:WeirdChess.Infrastructure.ScreenController.#ctor(Microsoft.Xna.Framework.Game)">
+            <summary>
+            Contructor which takes a Game object as argument.
+            </summary>
+            <param name="game">The Game object that will be used by the Screen Controller</param>
+        </member>
+        <member name="T:WeirdChess.Interfaces.IDeserialiser`1">
+            <summary>
+            Interface for Deserialiser objects
+            </summary>
+            <typeparam name="T">Specifies the return type of the Deserialise method. 
+            Can only be an object, which implments ISavable</typeparam>
+        </member>
+        <member name="M:WeirdChess.Interfaces.IDeserialiser`1.Deserialize(System.String)">
+            <summary>
+            When called, reads the file, 
+            specified by the FilePath property and returns the information from it, as a new ISavable object.
+            </summary>
+            <param name="filePath">The path to the target file</param>
+            <returns>A new ISavable object, containing the deserialised information.</returns>
         </member>
         <member name="T:WeirdChess.Interfaces.IIterator`1">
             <summary>
@@ -199,56 +354,6 @@
             Attempts to cast the current object to an ISettings object.
             </summary>
             <returns></returns>
-        </member>
-        <member name="T:WeirdChess.Interfaces.IScreenController">
-            <summary>
-            Interface for Screen Controller objects.
-            Provides methods for managing the IGameScreen collection.
-            Also provides an iterator for navigating between the different IGameScreen objects.
-            </summary>
-        </member>
-        <member name="M:WeirdChess.Interfaces.IScreenController.SetScreen(WeirdChess.Enums.GameScreenType,WeirdChess.Interfaces.IGameScreen)">
-            <summary>
-            Changes the value for the GameScreenType argument, to the IGameScreen argument.
-            </summary>
-            <exception cref="T:WeirdChess.Exceptions.GameScreenTypeException">Thrown if screenType value does not match the gameScreen.Type value</exception>
-            <param name="screenType">The screen type for the IGameScreen that's to be replaced.</param>
-            <param name="gameScreen">The new IGameScreen object</param>
-        </member>
-        <member name="M:WeirdChess.Interfaces.IScreenController.AddScreen(WeirdChess.Enums.GameScreenType,WeirdChess.Interfaces.IGameScreen)">
-            <summary>
-            Adds a new GameScreenType/IGameScreen pair to the IGameScreen collection.
-            </summary>
-            <exception cref="T:WeirdChess.Exceptions.GameScreenTypeException">Thrown if the a pair with the same GameScreenType already exists.</exception>
-            <param name="screenType">The GameScreenType value for the new pair.</param>
-            <param name="gameScreen">The IGameScreen object for the new pair.</param>
-        </member>
-        <member name="M:WeirdChess.Interfaces.IScreenController.DeleteScreen(WeirdChess.Enums.GameScreenType)">
-            <summary>
-            Deletes the GameScreenType/IGameScreen pair, described by the screenType argument.
-            </summary>
-            <param name="screenType">The GameScreenType for the GameScreenType/IGameScreen pair that will be deleted.</param>
-            <returns>Returns the IGameScreen object, from the deleted GameScreenType/IGameScreen pair.</returns>
-        </member>
-        <member name="M:WeirdChess.Interfaces.IScreenController.GetScreen(WeirdChess.Enums.GameScreenType)">
-            <summary>
-            Attempts to get the IGameScreen object, paired with the GameScreenType argument.
-            </summary>
-            <exception cref="T:WeirdChess.Exceptions.GameScreenTypeException">
-            Thrown if the method is called and Contains(screenType) returns FALSE.
-            </exception>
-            <param name="screenType">The GameScreenType of the IGameScreen that's to be retrieved.</param>
-            <returns>The IGameScreen object that's paired with the screenType argument.</returns>
-        </member>
-        <member name="M:WeirdChess.Interfaces.IScreenController.Contains(WeirdChess.Enums.GameScreenType)">
-            <summary>
-            Checks whether the IGameScreen collection contains a pair, with the provided GameScreenType.
-            </summary>
-            <param name="screenType">The GameScreenType for the GameScreenType/IGameScreen pair.</param>
-            <returns>
-            True if the pair is found.
-            False if the pair is not found. 
-            </returns>
         </member>
         <member name="T:WeirdChess.Interfaces.ISerialisationTool`1">
             <summary>
@@ -364,6 +469,34 @@
             Property containing the current settings, specified in the settings init file.
             If the init file does not exist, it is created with the default values and the same are loaded in the ISettings object.
             </summary>
+        </member>
+        <member name="T:WeirdChess.Utilities.Iterator`1">
+            <summary>
+            Implementation of IIterator
+            </summary>
+            <typeparam name="T">The generic type of the IIterator object</typeparam>
+        </member>
+        <member name="M:WeirdChess.Utilities.Iterator`1.#ctor(System.Collections.Generic.ICollection{`0})">
+            <summary>
+            Constructor which takes an ICollection as argument.
+            The ICollection generic type should be the same as the IIterator generic type. 
+            </summary>
+            <param name="collection">The collection that IIterator will iterate through</param>
+        </member>
+        <member name="M:WeirdChess.Utilities.Iterator`1.#ctor(System.Collections.Generic.ICollection{`0},System.Int32)">
+            <summary>
+            Constructor which takes ICollection and startIndex arguments
+            </summary>
+            <param name="collection">The collection that IIterator will iterate through</param>
+            <param name="startIndex">The index of the first element</param>
+        </member>
+        <member name="M:WeirdChess.Utilities.Iterator`1.#ctor(System.Collections.Generic.ICollection{`0},System.Int32,System.Int32)">
+            <summary>
+            Constructor which takes ICollection, startIndex and endIndex arguments
+            </summary>
+            <param name="collection">The collection that IIterator will iterate through</param>
+            <param name="startIndex">The index of the first element</param>
+            <param name="endIndex">The index of the last element</param>
         </member>
         <member name="T:WeirdChess.Utilities.Messages">
             <summary>
