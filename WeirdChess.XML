@@ -481,20 +481,20 @@
             Constructor which takes an ICollection as argument.
             The ICollection generic type should be the same as the IIterator generic type. 
             </summary>
-            <param name="collection">The collection that IIterator will iterate through</param>
+            <param name="collection">The col that IIterator will iterate through</param>
         </member>
         <member name="M:WeirdChess.Utilities.Iterator`1.#ctor(System.Collections.Generic.ICollection{`0},System.Int32)">
             <summary>
             Constructor which takes ICollection and startIndex arguments
             </summary>
-            <param name="collection">The collection that IIterator will iterate through</param>
+            <param name="collection">The col that IIterator will iterate through</param>
             <param name="startIndex">The index of the first element</param>
         </member>
         <member name="M:WeirdChess.Utilities.Iterator`1.#ctor(System.Collections.Generic.ICollection{`0},System.Int32,System.Int32)">
             <summary>
             Constructor which takes ICollection, startIndex and endIndex arguments
             </summary>
-            <param name="collection">The collection that IIterator will iterate through</param>
+            <param name="collection">The col that IIterator will iterate through</param>
             <param name="startIndex">The index of the first element</param>
             <param name="endIndex">The index of the last element</param>
         </member>

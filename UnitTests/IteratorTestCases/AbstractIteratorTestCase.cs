@@ -428,7 +428,7 @@ namespace UnitTests.IteratorTestCases
         [ExpectedException(typeof(IteratorOutOfRangeException))]
         public void TestForwardIterationWithStringArrayAndStartIndexThrowsExceptionWhenOutOfBounds()
         {
-            this.stringIterator = this.GetStringIterator(this.stringArray);
+            this.stringIterator = this.GetStringIterator(this.stringArray, 1);
 
             this.stringIterator.First();
             this.stringIterator.Next();
@@ -443,7 +443,7 @@ namespace UnitTests.IteratorTestCases
         [ExpectedException(typeof(IteratorOutOfRangeException))]
         public void TestForwardIterationWithIntArrayAndStartIndexThrowsExceptionWhenOutOfBounds()
         {
-            this.intIterator = this.GetIntIterator(this.intArray);
+            this.intIterator = this.GetIntIterator(this.intArray, 1);
 
             this.intIterator.First();
             this.intIterator.Next();
@@ -486,7 +486,7 @@ namespace UnitTests.IteratorTestCases
         [ExpectedException(typeof(IteratorOutOfRangeException))]
         public void TestForwardIterationWithStringArrayAndStartIndexAndEndIndexThrowsExceptionWhenOutOfBounds()
         {
-            this.stringIterator = this.GetStringIterator(this.stringArray);
+            this.stringIterator = this.GetStringIterator(this.stringArray, 1, 2);
 
             this.stringIterator.First();
             this.stringIterator.Next();
@@ -500,7 +500,7 @@ namespace UnitTests.IteratorTestCases
         [ExpectedException(typeof(IteratorOutOfRangeException))]
         public void TestForwardIterationWithIntArrayAndStartIndexAndEndIndexThrowsExceptionWhenOutOfBounds()
         {
-            this.intIterator = this.GetIntIterator(this.intArray);
+            this.intIterator = this.GetIntIterator(this.intArray, 1, 2);
 
             this.intIterator.First();
             this.intIterator.Next();
@@ -558,7 +558,7 @@ namespace UnitTests.IteratorTestCases
         [ExpectedException(typeof(IteratorOutOfRangeException))]
         public void TestForwardIterationWithStringListThrowsExceptionWhenOutOfBounds()
         {
-            this.stringIterator = this.GetStringIterator(this.stringList);
+            this.stringIterator = this.GetStringIterator(this.stringList, 1, 2);
 
             this.stringIterator.First();
             this.stringIterator.Next();
@@ -574,7 +574,7 @@ namespace UnitTests.IteratorTestCases
         [ExpectedException(typeof(IteratorOutOfRangeException))]
         public void TestForwardIterationWithIntListThrowsExceptionWhenOutOfBounds()
         {
-            this.intIterator = this.GetIntIterator(this.intList);
+            this.intIterator = this.GetIntIterator(this.intList, 1, 2);
 
             this.intIterator.First();
             this.intIterator.Next();
@@ -789,6 +789,10 @@ namespace UnitTests.IteratorTestCases
         {
             this.stringIterator = this.GetStringIterator(this.stringArray, 1);
 
+            this.stringIterator.Last();
+            Assert.IsFalse(this.stringIterator.IsDone());
+            Assert.AreEqual(valueD, this.stringIterator.Current());
+
             this.stringIterator.Previous();
             Assert.IsFalse(this.stringIterator.IsDone());
             Assert.AreEqual(valueC, this.stringIterator.Current());
@@ -796,10 +800,6 @@ namespace UnitTests.IteratorTestCases
             this.stringIterator.Previous();
             Assert.IsFalse(this.stringIterator.IsDone());
             Assert.AreEqual(valueB, this.stringIterator.Current());
-
-            this.stringIterator.Previous();
-            Assert.IsFalse(this.stringIterator.IsDone());
-            Assert.AreEqual(valueA, this.stringIterator.Current());
         }
 
         [TestMethod]
@@ -809,15 +809,15 @@ namespace UnitTests.IteratorTestCases
 
             this.intIterator.Last();
             Assert.IsFalse(this.intIterator.IsDone());
+            Assert.AreEqual(valueFour, this.intIterator.Current());
+
+            this.intIterator.Previous();
+            Assert.IsFalse(this.intIterator.IsDone());
             Assert.AreEqual(valueThree, this.intIterator.Current());
 
             this.intIterator.Previous();
             Assert.IsFalse(this.intIterator.IsDone());
             Assert.AreEqual(valueTwo, this.intIterator.Current());
-
-            this.intIterator.Previous();
-            Assert.IsFalse(this.intIterator.IsDone());
-            Assert.AreEqual(valueOne, this.intIterator.Current());
         }
 
         [TestMethod]
@@ -855,7 +855,7 @@ namespace UnitTests.IteratorTestCases
         {
             this.stringIterator = this.GetStringIterator(this.stringArray, 1, 2);
 
-            this.stringIterator.Previous();
+            this.stringIterator.Last();
             Assert.IsFalse(this.stringIterator.IsDone());
             Assert.AreEqual(valueC, this.stringIterator.Current());
 
@@ -987,6 +987,10 @@ namespace UnitTests.IteratorTestCases
         {
             this.stringIterator = this.GetStringIterator(this.stringList, 1);
 
+            this.stringIterator.Last();
+            Assert.IsFalse(this.stringIterator.IsDone());
+            Assert.AreEqual(valueD, this.stringIterator.Current());
+
             this.stringIterator.Previous();
             Assert.IsFalse(this.stringIterator.IsDone());
             Assert.AreEqual(valueC, this.stringIterator.Current());
@@ -994,10 +998,6 @@ namespace UnitTests.IteratorTestCases
             this.stringIterator.Previous();
             Assert.IsFalse(this.stringIterator.IsDone());
             Assert.AreEqual(valueB, this.stringIterator.Current());
-
-            this.stringIterator.Previous();
-            Assert.IsFalse(this.stringIterator.IsDone());
-            Assert.AreEqual(valueA, this.stringIterator.Current());
         }
 
         [TestMethod]
@@ -1007,15 +1007,15 @@ namespace UnitTests.IteratorTestCases
 
             this.intIterator.Last();
             Assert.IsFalse(this.intIterator.IsDone());
+            Assert.AreEqual(valueFour, this.intIterator.Current());
+
+            this.intIterator.Previous();
+            Assert.IsFalse(this.intIterator.IsDone());
             Assert.AreEqual(valueThree, this.intIterator.Current());
 
             this.intIterator.Previous();
             Assert.IsFalse(this.intIterator.IsDone());
             Assert.AreEqual(valueTwo, this.intIterator.Current());
-
-            this.intIterator.Previous();
-            Assert.IsFalse(this.intIterator.IsDone());
-            Assert.AreEqual(valueOne, this.intIterator.Current());
         }
 
         [TestMethod]
@@ -1053,7 +1053,7 @@ namespace UnitTests.IteratorTestCases
         {
             this.stringIterator = this.GetStringIterator(this.stringList, 1, 2);
 
-            this.stringIterator.Previous();
+            this.stringIterator.Last();
             Assert.IsFalse(this.stringIterator.IsDone());
             Assert.AreEqual(valueC, this.stringIterator.Current());
 

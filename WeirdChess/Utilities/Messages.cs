@@ -11,5 +11,6 @@ namespace WeirdChess.Utilities
         public const string IndexCannotBeNegative = "Index cannot be less than zero";
         public const string StartIndexGreaterThanEndIndex = "Start index cannot be greater than End index";
         public const string EndIndexGreaterOrEqualToLength = "End index must be less than collection length";
+        public const string CurrentIteratorIndexIsOutOfRange = "Current Iterator index is out of the specified range";
     }
 }
