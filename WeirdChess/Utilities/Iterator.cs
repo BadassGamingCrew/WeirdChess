@@ -64,7 +64,7 @@ namespace WeirdChess.Utilities
 
         public void Next()
         {
-            if (!this.IsDone())
+            if (!(this.currentIndex > this.endIndex))
             {
                 this.currentIndex++;
             }
@@ -72,7 +72,7 @@ namespace WeirdChess.Utilities
 
         public void Previous()
         {
-            if (!this.IsDone())
+            if (!(this.currentIndex < this.startIndex))
             {
                 this.currentIndex--;
             }
