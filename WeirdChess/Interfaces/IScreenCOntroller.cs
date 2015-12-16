@@ -6,9 +6,10 @@ namespace WeirdChess.Interfaces
     /// <summary>
     /// Interface for Screen Controller objects.
     /// Provides methods for managing the IGameScreen collection.
+    /// Extends IComponent.
     /// Also provides an iterator for navigating between the different IGameScreen objects.
     /// </summary>
-    public interface IScreenController : IIterable<IGameScreen>
+    public interface IScreenController : IComponent, IIterable<IGameScreen>
     {
         /// <summary>
         /// Changes the value for the GameScreenType argument, to the IGameScreen argument.

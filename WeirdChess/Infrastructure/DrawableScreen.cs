@@ -22,9 +22,9 @@ namespace WeirdChess.Infrastructure
             this.UpdateSpriteBatch(spriteBatch);
         }
         /// <summary>
-        /// 
+        /// Method for changing the SpriteBatch object, associated with this current object.
         /// </summary>
-        /// <param name="spriteBatch"></param>
+        /// <param name="spriteBatch">The new SpriteBatch object</param>
         public void UpdateSpriteBatch(SpriteBatch spriteBatch)
         {
             this.spriteBatch = spriteBatch;
