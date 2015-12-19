@@ -2,8 +2,10 @@
 namespace WeirdChess.Interfaces
 {
     using Enums;
+    using Exceptions;
     /// <summary>
-    /// An interface for Setting objects
+    /// An interface for Setting objects. Throws exception if an invalid value is used in object initialization.
+    /// <exception cref="InvalidSettingValueException">Thrown when an invalid value us passed to the object constructor.</exception>
     /// </summary>
     public interface ISetting
     {

@@ -54,6 +54,8 @@
     <Compile Include="IteratorTestCases\IteratorTestCase.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
     <Compile Include="SettingTestCases\AbstractISettingTestCase.cs" />
+    <Compile Include="SettingTestCases\MusicSettingTestCase.cs" />
+    <Compile Include="SettingTestCases\ScreenResolutionSettingTestCase.cs" />
   </ItemGroup>
   <ItemGroup>
     <ProjectReference Include="..\WeirdChess\WeirdChess.csproj">

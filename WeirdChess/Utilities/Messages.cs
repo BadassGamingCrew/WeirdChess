@@ -12,5 +12,10 @@ namespace WeirdChess.Utilities
         public const string StartIndexGreaterThanEndIndex = "Start index cannot be greater than End index";
         public const string EndIndexGreaterOrEqualToLength = "End index must be less than collection length";
         public const string CurrentIteratorIndexIsOutOfRange = "Current Iterator index is out of the specified range";
+        public const string InvalidScreenResolutionSetting = "The provided screen resolution is invalid.";
+        public const string InvalidMusicOption = "The provided music option is invalid";
+        public const string InvalidSoundOption = "The provided sound option is invalid";
+        public const string InvalidMusicVolume = "The provided music volume value is invalid";
+        public const string InvalidSoundVolume = "The provided sound volume value is invalid";
     }
 }

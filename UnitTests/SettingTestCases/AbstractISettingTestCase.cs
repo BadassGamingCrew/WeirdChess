@@ -4,6 +4,7 @@ namespace UnitTests.SettingTestCases
     using Microsoft.VisualStudio.TestTools.UnitTesting;
     using WeirdChess.Enums;
     using WeirdChess.Interfaces;
+    using WeirdChess.Exceptions;
 
     [TestClass]
     public abstract class AbstractISettingTestCase
@@ -12,12 +13,14 @@ namespace UnitTests.SettingTestCases
         private SettingType settingType;
         private object settingValue;
         private object[] possibleValues;
+        private object[] invalidValues;
 
         protected abstract ISetting GetSetting();
         protected abstract ISetting GetSetting(object value);
         protected abstract SettingType GetSettingType();
         protected abstract object GetDefaultValue();
-        protected abstract object[] GetPossibleValues();
+        protected abstract object[] GetAllowedValues();
+        protected abstract object[] GetInvalidValues();
 
         [ClassInitialize]
         public void BaseInit(TestContext context)
@@ -29,6 +32,8 @@ namespace UnitTests.SettingTestCases
         {
             this.settingType = this.GetSettingType();
             this.settingValue = this.GetDefaultValue();
+            this.possibleValues = this.GetAllowedValues();
+            this.invalidValues = this.GetInvalidValues();
         }
 
         [TestCleanup]
@@ -37,7 +42,7 @@ namespace UnitTests.SettingTestCases
             this.setting = null;
             this.settingType = default(SettingType);
             this.settingValue = null;
-            this.possibleValues = this.GetPossibleValues();
+            this.possibleValues = null;
         }
 
         [TestMethod]
@@ -105,6 +110,23 @@ namespace UnitTests.SettingTestCases
             {
                 this.setting = this.GetSetting(value);
                 Assert.AreEqual(value, this.setting.Value);
+            }
+        }
+
+        [TestMethod]
+        public void TestConstructorThrowsExceptionWhenInvalidValueIsUsed()
+        {
+            foreach (object value in this.invalidValues)
+            {
+                try
+                {
+                    this.setting = this.GetSetting(value);
+                    Assert.Fail("Expected exception not found. Value: " + value);
+                }
+                catch (InvalidSettingValueException)
+                {
+                    // expected
+                }
             }
         }
     }

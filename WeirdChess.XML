@@ -85,6 +85,18 @@
             <param name="paramName">The param name</param>
             <param name="message">The outer exception message</param>
         </member>
+        <member name="T:WeirdChess.Exceptions.InvalidSettingValueException">
+            <summary>
+            Exception for Invalid values for ISetting objects. Extends ArgumentOutOfRangeException
+            </summary>
+        </member>
+        <member name="M:WeirdChess.Exceptions.InvalidSettingValueException.#ctor(System.String,System.String)">
+            <summary>
+            Constructor which takes two argumens and passes them to the base class.
+            </summary>
+            <param name="paramName">The name of the invalid parameter.</param>
+            <param name="message">The error message associated with the error context.</param>
+        </member>
         <member name="T:WeirdChess.Exceptions.IteratorOutOfRangeException">
             <summary>
             Exception class for IITerator objects
@@ -131,9 +143,73 @@
         </member>
         <member name="M:WeirdChess.Infrastructure.DrawableScreen.UpdateSpriteBatch(Microsoft.Xna.Framework.Graphics.SpriteBatch)">
             <summary>
-            
+            Method for changing the SpriteBatch object, associated with this current object.
             </summary>
-            <param name="spriteBatch"></param>
+            <param name="spriteBatch">The new SpriteBatch object</param>
+        </member>
+        <member name="T:WeirdChess.Infrastructure.MusicSetting">
+            <summary>
+            Concrete class for MusicSetting ISetting objects
+            </summary>
+        </member>
+        <member name="T:WeirdChess.Infrastructure.Setting">
+            <summary>
+            Abstract class for ISetting objects
+            </summary>
+        </member>
+        <member name="T:WeirdChess.Interfaces.ISetting">
+            <summary>
+            An interface for Setting objects. Throws exception if an invalid value is used in object initialization.
+            <exception cref="T:WeirdChess.Exceptions.InvalidSettingValueException">Thrown when an invalid value us passed to the object constructor.</exception>
+            </summary>
+        </member>
+        <member name="P:WeirdChess.Interfaces.ISetting.Type">
+            <summary>
+            The type of the setting object.
+            </summary>
+        </member>
+        <member name="P:WeirdChess.Interfaces.ISetting.Value">
+            <summary>
+            The value of the setting object.
+            </summary>
+        </member>
+        <member name="M:WeirdChess.Infrastructure.Setting.#ctor(WeirdChess.Enums.SettingType,System.Object,System.Object[],System.String)">
+            <summary>
+            Constructor which takes two arguments.
+            </summary>
+            <param name="type">The Setting Type of the ISetting object</param>
+            <param name="value">The value for the ISetting object</param>
+            <param name="validValues">Collection of valid values for this SettingType</param>
+            <param name="valueErrorMessage">The error message to be thrown, if an InvalidSettingValueException occurs</param>
+        </member>
+        <member name="M:WeirdChess.Infrastructure.MusicSetting.#ctor">
+            <summary>
+            Default constructor with no parameters.
+            Creates an object using the DefaultValue constant.
+            </summary>
+        </member>
+        <member name="M:WeirdChess.Infrastructure.MusicSetting.#ctor(WeirdChess.Enums.MusicOptions)">
+            <summary>
+            Constructor which takes a value parameter.
+            </summary>
+            <param name="value">The value for the MusicSetting object.</param>
+        </member>
+        <member name="T:WeirdChess.Infrastructure.ScreenResolutionSetting">
+            <summary>
+            Concrete class for ScreenResolution ISetting objects
+            </summary>
+        </member>
+        <member name="M:WeirdChess.Infrastructure.ScreenResolutionSetting.#ctor">
+            <summary>
+            Default constructor with no parameters.
+            Creates an object using the DefaultValue constant.
+            </summary>
+        </member>
+        <member name="M:WeirdChess.Infrastructure.ScreenResolutionSetting.#ctor(System.String)">
+            <summary>
+            Constructor which takes a value parameter.
+            </summary>
+            <param name="value">The value for the ScreenResolution object.</param>
         </member>
         <member name="T:WeirdChess.Interfaces.IComponent">
             <summary>
@@ -215,6 +291,7 @@
             <summary>
             Interface for Screen Controller objects.
             Provides methods for managing the IGameScreen collection.
+            Extends IComponent.
             Also provides an iterator for navigating between the different IGameScreen objects.
             </summary>
         </member>
@@ -274,11 +351,10 @@
             False if the pair is not found. 
             </returns>
         </member>
-        <member name="M:WeirdChess.Infrastructure.ScreenController.#ctor(Microsoft.Xna.Framework.Game)">
+        <member name="M:WeirdChess.Infrastructure.ScreenController.#ctor">
             <summary>
             Contructor which takes a Game object as argument.
             </summary>
-            <param name="game">The Game object that will be used by the Screen Controller</param>
         </member>
         <member name="T:WeirdChess.Interfaces.IDeserialiser`1">
             <summary>
@@ -406,21 +482,6 @@
             <param name="filePath">The path to the target file.</param>
             <param name="settings">An ISavable object which contains the information to be written to the file.</param>
         </member>
-        <member name="T:WeirdChess.Interfaces.ISetting">
-            <summary>
-            An interface for Setting objects
-            </summary>
-        </member>
-        <member name="P:WeirdChess.Interfaces.ISetting.Type">
-            <summary>
-            The type of the setting object.
-            </summary>
-        </member>
-        <member name="P:WeirdChess.Interfaces.ISetting.Value">
-            <summary>
-            The value of the setting object.
-            </summary>
-        </member>
         <member name="T:WeirdChess.Interfaces.ISettingFactory">
             <summary>
             Interface for Settings Factory objects
@@ -468,6 +529,32 @@
             <summary>
             Property containing the current settings, specified in the settings init file.
             If the init file does not exist, it is created with the default values and the same are loaded in the ISettings object.
+            </summary>
+        </member>
+        <member name="T:WeirdChess.Utilities.AllowedSettings">
+            <summary>
+            Static class holding collections of allowed values for ISetting objects
+            </summary>
+        </member>
+        <!-- Badly formed XML comment ignored for member "F:WeirdChess.Utilities.AllowedSettings.ScreenResolutionValues" -->
+        <member name="F:WeirdChess.Utilities.AllowedSettings.MusicOptionValues">
+            <summary>
+            Array of allowed MusicOption values.
+            </summary>
+        </member>
+        <member name="F:WeirdChess.Utilities.AllowedSettings.SoundOptionValues">
+            <summary>
+            Array of allowed SoundOption values.
+            </summary>
+        </member>
+        <member name="F:WeirdChess.Utilities.AllowedSettings.MusicVolumeValues">
+            <summary>
+            Array of allowed Music Volume values.
+            </summary>
+        </member>
+        <member name="F:WeirdChess.Utilities.AllowedSettings.SoundVolumeValues">
+            <summary>
+            Array of allowed Sound Volume values.
             </summary>
         </member>
         <member name="T:WeirdChess.Utilities.Iterator`1">
