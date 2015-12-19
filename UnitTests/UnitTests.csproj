@@ -53,6 +53,7 @@
     <Compile Include="IteratorTestCases\AbstractIteratorTestCase.cs" />
     <Compile Include="IteratorTestCases\IteratorTestCase.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
+    <Compile Include="SettingTestCases\AbstractISettingTestCase.cs" />
   </ItemGroup>
   <ItemGroup>
     <ProjectReference Include="..\WeirdChess\WeirdChess.csproj">
@@ -60,6 +61,7 @@
       <Name>WeirdChess</Name>
     </ProjectReference>
   </ItemGroup>
+  <ItemGroup />
   <Choose>
     <When Condition="'$(VisualStudioVersion)' == '10.0' And '$(IsCodedUITest)' == 'True'">
       <ItemGroup>

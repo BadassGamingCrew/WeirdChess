@@ -6,7 +6,8 @@ namespace WeirdChess.Enums
     /// </summary>
     public enum SettingType
     {
-        ScreenResolution,
+        ScreenResolutionWidth,
+        ScreenResolutionHeight,
         Music,
         Sound,
         MusicVolume,
